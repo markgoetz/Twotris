@@ -6,8 +6,10 @@ using System.Collections;
 public class GhostPiece : MonoBehaviour {
 	private FallingPiece piece;
 	public GameObject blockPrefab;
+	public PlayerColorList playerColorList;
 
 	private Board board;
+	private float GHOST_COLOR_ALPHA = .3f;
 
 	void Start () {
 		board = GameObject.FindGameObjectWithTag("Board").GetComponent<Board>();
@@ -16,6 +18,10 @@ public class GhostPiece : MonoBehaviour {
 			GameObject ghost_block = Instantiate (blockPrefab);
 			ghost_block.transform.parent = transform;
 			
+			MeshRenderer renderer = ghost_block.GetComponent<MeshRenderer>();
+			Color player_color = playerColorList.Colors[piece.PlayerNumber];
+			
+			renderer.material.color = new Color(player_color.r, player_color.g, player_color.b, GHOST_COLOR_ALPHA);
 		}
 	}
 	
