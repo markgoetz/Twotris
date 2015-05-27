@@ -40,6 +40,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockPrefab: {fileID: 189244, guid: 0f03ee4b3da644676a1a7badf8360375, type: 2}
+  playerColorList: {fileID: 11400000, guid: d3fa13a2c17824975999c3bf26ada1b1, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -11,5 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5c36bdc51cd4488590d2fc345087070, type: 3}
   m_Name: PlayerColorList
   m_EditorClassIdentifier: 
-  Player1Color: {r: 0, g: 0, b: 0, a: 0}
-  Player2Color: {r: 0, g: 0, b: 0, a: 0}
+  Colors:
+  - {r: .630020261, g: .580882311, b: 1, a: 0}
+  - {r: .266125679, g: .20588237, b: 1, a: 0}
+  - {r: 0, g: 1, b: .83448267, a: 0}

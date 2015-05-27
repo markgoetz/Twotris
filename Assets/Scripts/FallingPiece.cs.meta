@@ -1,10 +1,13 @@
 fileFormatVersion: 2
 guid: 33049cc92a6124690ab35e93ce81d82f
-timeCreated: 1430874077
+timeCreated: 1432691358
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - fallingBlock: {instanceID: 0}
+  - ghostPiece: {instanceID: 0}
+  - playerColorList: {fileID: 11400000, guid: d3fa13a2c17824975999c3bf26ada1b1, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

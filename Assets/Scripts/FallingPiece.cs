@@ -17,6 +17,7 @@ public class FallingPiece : MonoBehaviour {
 	public float fastFallTime = .06f;
 	public GameObject fallingBlock;
 	public GameObject ghostPiece;
+	public PlayerColorList playerColorList;
 
 	private int size = 1;
 	private bool can_move = true;
@@ -30,10 +31,12 @@ public class FallingPiece : MonoBehaviour {
 	private GameObject[] blocks;
 	
 	void Awake() {
-		//size = GetComponent<BoxCollider>().size;	
+		//size = GetComponent<BoxCollider>().size;
 		generateBlocks();
+		input = GetComponent<InputManager>();	
+		
 		board = GameObject.FindGameObjectWithTag("Board").GetComponent<Board>();
-		input = GetComponent<InputManager>();
+
 		
 		dm = GameObject.FindGameObjectWithTag("DifficultyManager").GetComponent<DifficultyManager>();
 		
@@ -221,7 +224,21 @@ public class FallingPiece : MonoBehaviour {
 	
 	public int PlayerNumber {
 		get { return input.playerNumber; }
-		set { input.playerNumber = value; }
+		set {
+			input.playerNumber = value;
+			setOutline(value);
+		}
+	}
+	
+	private void setOutline(int player_number) {
+		Color player_color = playerColorList.Colors[player_number];
+	
+		// Set the glow effect to the player's color
+		foreach (GameObject block in Blocks) {		
+			MeshRenderer renderer = block.GetComponent<MeshRenderer>();
+			Material material = renderer.material;
+			material.SetColor ("_OutlineColor", player_color);
+		}
 	}
 
 	
