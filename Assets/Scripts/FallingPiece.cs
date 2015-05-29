@@ -18,14 +18,14 @@ public class FallingPiece : MonoBehaviour {
 	public GameObject fallingBlock;
 	public GameObject ghostPiece;
 	public PlayerColorList playerColorList;
+	public DifficultyManager dm;
 
 	private int size = 1;
 	private bool can_move = true;
 	private Board board;
 	private bool falling = true;
-	private DifficultyManager dm;
+
 	private InputManager input;
-	
 	private FallType fall_type;
 	
 	private GameObject[] blocks;
@@ -37,8 +37,6 @@ public class FallingPiece : MonoBehaviour {
 		
 		board = GameObject.FindGameObjectWithTag("Board").GetComponent<Board>();
 
-		
-		dm = GameObject.FindGameObjectWithTag("DifficultyManager").GetComponent<DifficultyManager>();
 		
 		// HACK: Probably a better way to get all the children.
 		blocks = new GameObject[transform.childCount];
@@ -83,7 +81,7 @@ public class FallingPiece : MonoBehaviour {
 		if (movement.x != 0) {
 
 			foreach (GameObject block in blocks) {
-				if (board.Collide(block.transform.position + movement, PlayerNumber) != BlockCollision.NoCollision) {
+				if (board.Collide(block.transform.position + movement, PlayerNumber) == BlockCollision.Solid) {
 					movement = Vector2.zero;
 				}
 			}
@@ -174,10 +172,10 @@ public class FallingPiece : MonoBehaviour {
 			Vector3 rotated_position = block.transform.localPosition;
 			rotated_position = transform.position + (rotation * rotated_position);
 			
-			if (board.CollideWithBlock(rotated_position, PlayerNumber) != BlockCollision.NoCollision)
+			if (board.CollideWithBlock(rotated_position, PlayerNumber) == BlockCollision.Solid)
 				return;
 			
-			if (board.CollideWithWall(rotated_position) != BlockCollision.NoCollision) {
+			if (board.CollideWithWall(rotated_position) == BlockCollision.Solid) {
 				float gap = 0;
 			
 				if (rotated_position.x < transform.position.x) {

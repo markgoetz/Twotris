@@ -227,7 +227,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
 --- !u!1 &268271242
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,7 +346,7 @@ RectTransform:
   - {fileID: 996977731}
   - {fileID: 1207644143}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -451,6 +451,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fallingPiece: {fileID: 194044, guid: 50be42e9c322b4030960e9f1ae7ceae4, type: 2}
   playerNumber: 2
+  dm: {fileID: 11400000, guid: f1aace6160d904df0af53884c5c9e4ad, type: 2}
 --- !u!4 &343094026
 Transform:
   m_ObjectHideFlags: 0
@@ -699,66 +700,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
---- !u!1 &1648226759
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1648226761}
-  - 114: {fileID: 1648226760}
-  m_Layer: 0
-  m_Name: DifficultyManager
-  m_TagString: DifficultyManager
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1648226760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1648226759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de668dee2ddc94ddf8982c7ac003955e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levels:
-  - PieceFallDelay: 1
-    BetweenPieceDelay: 1.20000005
-  - PieceFallDelay: .899999976
-    BetweenPieceDelay: 1.14999998
-  - PieceFallDelay: .800000012
-    BetweenPieceDelay: 1.10000002
-  - PieceFallDelay: .699999988
-    BetweenPieceDelay: 1.04999995
-  - PieceFallDelay: .600000024
-    BetweenPieceDelay: .800000012
-  - PieceFallDelay: .5
-    BetweenPieceDelay: .699999988
-  - PieceFallDelay: .400000006
-    BetweenPieceDelay: .600000024
-  - PieceFallDelay: .300000012
-    BetweenPieceDelay: .5
-  - PieceFallDelay: .200000003
-    BetweenPieceDelay: .400000006
-  - PieceFallDelay: .100000001
-    BetweenPieceDelay: .300000012
---- !u!4 &1648226761
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1648226759}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.49401569, y: 5.94380379, z: -.901309013}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
 --- !u!1 &1956223811
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,6 +730,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fallingPiece: {fileID: 194044, guid: 50be42e9c322b4030960e9f1ae7ceae4, type: 2}
   playerNumber: 1
+  dm: {fileID: 11400000, guid: f1aace6160d904df0af53884c5c9e4ad, type: 2}
 --- !u!4 &1956223813
 Transform:
   m_ObjectHideFlags: 0
@@ -836,6 +778,7 @@ MonoBehaviour:
   board: {fileID: 1326592649}
   stoppedBlock: {fileID: 122756, guid: 896b0b1ed61a744ea9fee614c4174919, type: 2}
   uiManager: {fileID: 319855789}
+  dm: {fileID: 11400000, guid: f1aace6160d904df0af53884c5c9e4ad, type: 2}
 --- !u!4 &1958618169
 Transform:
   m_ObjectHideFlags: 0

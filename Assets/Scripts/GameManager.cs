@@ -8,14 +8,10 @@ public class GameManager : MonoBehaviour {
 	public Board board;
 	public GameObject stoppedBlock;
 	public UIManager uiManager;
-
+	public DifficultyManager dm;
+	
 	private int score = 0;
 	private int lines = 0;
-	private DifficultyManager dm;
-	
-	public void Start() {
-		dm = GameObject.FindGameObjectWithTag("DifficultyManager").GetComponent<DifficultyManager>();
-	}
 	
 	// What do you do if a block lands?
 	public void PieceLanded(FallingPiece piece) {

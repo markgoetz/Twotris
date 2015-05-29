@@ -4,12 +4,10 @@ using System.Collections;
 public class PieceSpawner : MonoBehaviour {
 	public GameObject fallingPiece;
 	public int playerNumber;
-	
-	private DifficultyManager dm;
+	public DifficultyManager dm;
 
 	// Use this for initialization
 	void Start () {
-		dm = GameObject.FindGameObjectWithTag("DifficultyManager").GetComponent<DifficultyManager>();
 		SpawnPiece ();
 	}
 	

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class DifficultyManager : MonoBehaviour {
+public class DifficultyManager : ScriptableObject {
 	private int lines = 0;
 	public DifficultyLevel[] levels = {
 		new DifficultyLevel(2f,   2f),
@@ -21,7 +21,12 @@ public class DifficultyManager : MonoBehaviour {
 	}
 
 	private DifficultyLevel _getCurrentLevel() {
-		return levels[Level];
+		int level = Level;
+		
+		if (level >= levels.Length)
+			level = levels.Length - 1;
+	
+		return levels[level];
 	}
 	
 	public int Level {
