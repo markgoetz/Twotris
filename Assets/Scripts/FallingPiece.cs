@@ -3,16 +3,6 @@ using System.Collections;
 
 [RequireComponent(typeof(InputManager))]
 public class FallingPiece : MonoBehaviour {
-	static private int[,,] block_types = {
-		{{0, 0},{0,1},{1,0},{ 1,1}}, // square
-	    {{0,-1},{0,0},{0,1},{ 0,2}}, // line
-		{{0,-1},{0,0},{0,1},{ 1,1}}, // L
-		{{0,-1},{0,0},{0,1},{-1,1}}, // other L		
-		{{0,-1},{0,0},{0,1},{ 1,0}}, // T	
-		{{0,-1},{0,0},{1,0},{ 1,1}}, // Z		
-		{{1,-1},{1,0},{0,0},{ 0,1}} // other Z					
-	};
-
 	//public float movementTime;
 	public float fastFallTime = .06f;
 	public GameObject fallingBlock;
@@ -31,26 +21,20 @@ public class FallingPiece : MonoBehaviour {
 	private GameObject[] blocks;
 	
 	void Awake() {
-		//size = GetComponent<BoxCollider>().size;
-		generateBlocks();
 		input = GetComponent<InputManager>();	
 		
 		board = GameObject.FindGameObjectWithTag("Board").GetComponent<Board>();
-
-		
-		// HACK: Probably a better way to get all the children.
-		blocks = new GameObject[transform.childCount];
-		int count = 0;
-		foreach (Transform block in transform) {
-			blocks[count++] = block.gameObject;
-		}
-		
-		generateGhost();
+	}
+	
+	public void init(int player_number, PieceTemplate piece) {
+		generateBlocks(piece);
+		this.PlayerNumber = player_number;
 		
 		fall_type = FallType.Normal;
-		
-		StartCoroutine ("fall");
+		StartCoroutine("fall");
 	}
+	
+	
 	
 	private Vector3 getMovement() {
 		if (!can_move) return Vector3.zero;
@@ -202,17 +186,20 @@ public class FallingPiece : MonoBehaviour {
 		GameObject.FindGameObjectWithTag("GameManager").SendMessage("PieceLanded", this);
 	}
 	
-	private void generateBlocks() {
-		int block_shape = Random.Range(0, block_types.GetLength(0));
-		
-		for (int block_count = 0; block_count < 4; block_count++) {
-			int x = block_types[block_shape, block_count, 0];
-			int y = block_types[block_shape, block_count, 1];
-			
+	private void generateBlocks(PieceTemplate piece) {	
+		blocks = new GameObject[piece.locations.Length];
+	
+		int count = 0;
+		foreach (Vector2 location in piece.locations) {
 			GameObject block = Instantiate (fallingBlock) as GameObject;
+			block.GetComponent<MeshRenderer>().material.color = piece.color;
 			block.transform.parent = transform;
-			block.transform.localPosition = new Vector3(x, y, 0);
+			block.transform.localPosition = location;
+			
+			blocks[count++] = block.gameObject;
 		}
+		
+		generateGhost ();
 	}
 	
 	private void generateGhost() {

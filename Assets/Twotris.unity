@@ -452,6 +452,7 @@ MonoBehaviour:
   fallingPiece: {fileID: 194044, guid: 50be42e9c322b4030960e9f1ae7ceae4, type: 2}
   playerNumber: 2
   dm: {fileID: 11400000, guid: f1aace6160d904df0af53884c5c9e4ad, type: 2}
+  pieceList: {fileID: 11400000, guid: 1ed2ab1af0039478192cb7f0109af241, type: 2}
 --- !u!4 &343094026
 Transform:
   m_ObjectHideFlags: 0
@@ -731,6 +732,7 @@ MonoBehaviour:
   fallingPiece: {fileID: 194044, guid: 50be42e9c322b4030960e9f1ae7ceae4, type: 2}
   playerNumber: 1
   dm: {fileID: 11400000, guid: f1aace6160d904df0af53884c5c9e4ad, type: 2}
+  pieceList: {fileID: 11400000, guid: 1ed2ab1af0039478192cb7f0109af241, type: 2}
 --- !u!4 &1956223813
 Transform:
   m_ObjectHideFlags: 0

@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72977e2e2d5b94fa1b5f11f8fd03dbe7, type: 3}
+  m_Name: PieceList
+  m_EditorClassIdentifier: 
+  pieces:
+  - name: Line
+    color: {r: .992647052, g: .645220578, b: .124080881, a: 1}
+    locations:
+    - {x: -1, y: 0}
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 2, y: 0}
+  - name: Square
+    color: {r: .727941155, g: .727941155, b: .727941155, a: 1}
+    locations:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+  - name: L
+    color: {r: .866263688, g: .91911763, b: .371702015, a: 1}
+    locations:
+    - {x: -1, y: 0}
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+  - name: Other L
+    color: {r: 0, g: 1, b: .420689583, a: 1}
+    locations:
+    - {x: -1, y: 0}
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 1, y: -1}
+  - name: T
+    color: {r: .772058845, g: .0567690395, b: .101166323, a: 1}
+    locations:
+    - {x: -1, y: 0}
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+  - name: Z
+    color: {r: .706229091, g: .0683931783, b: .845588207, a: 1}
+    locations:
+    - {x: -1, y: 0}
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+  - name: Other Z
+    color: {r: .221399203, g: .225196823, b: .772058845, a: 0}
+    locations:
+    - {x: -1, y: 1}
+    - {x: 0, y: 1}
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}

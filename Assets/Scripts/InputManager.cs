@@ -30,8 +30,8 @@ public class InputManager : MonoBehaviour {
 		
 		
 		
-		fast_fall = (Input.GetAxisRaw (VerticalAxis) > 0);
-		instant_fall = (Input.GetAxisRaw (VerticalAxis) < 0);
+		fast_fall = (Input.GetAxisRaw (VerticalAxis) > .05f);
+		instant_fall = (Input.GetAxisRaw (VerticalAxis) < -.05f);
 		
 		
 		
