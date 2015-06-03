@@ -18,6 +18,8 @@ public class GhostPiece : MonoBehaviour {
 			GameObject ghost_block = Instantiate (blockPrefab);
 			ghost_block.transform.parent = transform;
 			
+			transform.GetChild(i).transform.localPosition = piece.Blocks[i].transform.localPosition;
+			
 			MeshRenderer renderer = ghost_block.GetComponent<MeshRenderer>();
 			Color player_color = playerColorList.Colors[piece.PlayerNumber];
 			
@@ -25,13 +27,12 @@ public class GhostPiece : MonoBehaviour {
 		}
 	}
 	
+	public void Remove() {
+		Destroy (gameObject);
+	}
+	
 	// Update is called once per frame
 	void Update () {
-		// HACK: GameManager or FallingPiece should send a message to destroy this.
-		if (piece == null) {
-			Destroy (gameObject);
-		}
-	
 		GameObject[] blocks = piece.Blocks;
 		
 		int y_offset = 0;
@@ -56,9 +57,7 @@ public class GhostPiece : MonoBehaviour {
 		transform.rotation = piece.transform.rotation;
 		
 		// HACK: this shouldn't be necessary every frame.
-		for (int i = 0; i < blocks.Length; i++) {
-			transform.GetChild(i).transform.localPosition = blocks[i].transform.localPosition;
-		}
+
 	}
 	
 	public FallingPiece Piece {

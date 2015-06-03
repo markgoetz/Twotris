@@ -11,6 +11,7 @@ TagManager:
   - Board
   - DifficultyManager
   - Piece
+  - BlockRoot
   layers:
   - Default
   - TransparentFX

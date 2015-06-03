@@ -17,6 +17,8 @@ public class InputManager : MonoBehaviour {
 	private bool read_move = false;
 	
 	void Update() {
+		// First, read in the horizontal axis.
+		// Use the read_move flag to catch when the left and right arrows are pressed for the first time.
 		if (read_move == true) {
 			move = 0;
 			
@@ -29,12 +31,13 @@ public class InputManager : MonoBehaviour {
 		}
 		
 		
-		
+		// Read in the vertical axis.  Use a dead zone.
 		fast_fall = (Input.GetAxisRaw (VerticalAxis) > .05f);
 		instant_fall = (Input.GetAxisRaw (VerticalAxis) < -.05f);
 		
 		
 		
+		// finally, read in the rotation buttons.
 		if (Input.GetButtonDown (Clockwise)) {
 			rotation = 1;
 		}
@@ -46,15 +49,16 @@ public class InputManager : MonoBehaviour {
 		}
 	}
 	
+	// These methods create the Axis labels that were set up in Unity.
 	private string PlayerName {
 		get { return "P" + (playerNumber) + " "; }
 	}
-	
 	private string HorizontalAxis { get { return PlayerName + "Horizontal"; }}
 	private string VerticalAxis { get { return PlayerName + "Vertical"; }}
 	private string Clockwise { get { return PlayerName + "Clockwise"; }}
 	private string Counterclockwise { get { return PlayerName + "Counterclockwise"; }}
 	
+	// Public facing properties that FallingPiece can use to get the abstracted actions.
 	public int Move { get { return move; } }
 	public bool FastFall { get { return fast_fall; } }
 	public bool InstantFall { get { return instant_fall; } }

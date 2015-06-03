@@ -6,7 +6,6 @@ public class GameManager : MonoBehaviour {
 	public int scorePerBlock = 10;
 	public int[] scorePerClearedLines = {0,100,300,600,1000};
 	public Board board;
-	public GameObject stoppedBlock;
 	public UIManager uiManager;
 	public DifficultyManager dm;
 	
@@ -14,15 +13,7 @@ public class GameManager : MonoBehaviour {
 	private int lines = 0;
 	
 	// What do you do if a block lands?
-	public void PieceLanded(FallingPiece piece) {
-		int player_number = piece.PlayerNumber;
-		GameObject[] blocks = piece.Blocks;
-		foreach (GameObject child in blocks) {
-			Instantiate (stoppedBlock, child.transform.position, Quaternion.identity);
-		}
-		piece.gameObject.SetActive(false);
-		Destroy (piece.gameObject);
-
+	public void PieceLanded(int player_number) {
 		score += scorePerBlock;
 		
 		// check if any lines have been cleared (from top to bottom), and update the score

@@ -14,21 +14,24 @@ public class FallingPiece : MonoBehaviour {
 	private bool can_move = true;
 	private Board board;
 	private bool falling = true;
+	private GameObject ghost;
 
 	private InputManager input;
 	private FallType fall_type;
+	private PieceState state;
 	
 	private GameObject[] blocks;
 	
 	void Awake() {
 		input = GetComponent<InputManager>();	
-		
 		board = GameObject.FindGameObjectWithTag("Board").GetComponent<Board>();
 	}
 	
 	public void init(int player_number, PieceTemplate piece) {
 		generateBlocks(piece);
 		this.PlayerNumber = player_number;
+		
+		setState(PieceState.Falling);
 		
 		fall_type = FallType.Normal;
 		StartCoroutine("fall");
@@ -144,7 +147,7 @@ public class FallingPiece : MonoBehaviour {
 				transform.position = transform.position + Vector3.down * size;
 		}
 		
-		land ();
+		setState(PieceState.Landed);
 		yield break;
 	}
 	
@@ -181,18 +184,15 @@ public class FallingPiece : MonoBehaviour {
 	private void stopFalling() {
 		falling = false;
 	}
-			
-	private void land() {
-		GameObject.FindGameObjectWithTag("GameManager").SendMessage("PieceLanded", this);
-	}
-	
+
 	private void generateBlocks(PieceTemplate piece) {	
 		blocks = new GameObject[piece.locations.Length];
 	
 		int count = 0;
 		foreach (Vector2 location in piece.locations) {
 			GameObject block = Instantiate (fallingBlock) as GameObject;
-			block.GetComponent<MeshRenderer>().material.color = piece.color;
+			block.SendMessage ("setColor", piece.color);
+
 			block.transform.parent = transform;
 			block.transform.localPosition = location;
 			
@@ -203,29 +203,60 @@ public class FallingPiece : MonoBehaviour {
 	}
 	
 	private void generateGhost() {
-		GameObject ghost = Instantiate(ghostPiece);
+		ghost = Instantiate(ghostPiece);
 		ghost.GetComponent<GhostPiece>().Piece = this;
 	}
 	
 	public int PlayerNumber {
 		get { return input.playerNumber; }
-		set {
-			input.playerNumber = value;
-			setOutline(value);
+		set { input.playerNumber = value; }
+	}
+	
+	public void ShowOutline(bool status) {
+		if (status)
+			setOutline (playerColorList.Colors[PlayerNumber]);
+		else
+			setOutline (new Color(0,0,0,0));
+	}
+	
+	private void setOutline(Color c) {
+		foreach (GameObject block in Blocks) {		
+			block.SendMessage("setOutline", c);
 		}
 	}
 	
-	private void setOutline(int player_number) {
-		Color player_color = playerColorList.Colors[player_number];
+	private void setState(PieceState new_state) {
+		OnPieceStateExit(state);
+		state = new_state;
+		OnPieceStateEnter(state);
+	}
 	
-		// Set the glow effect to the player's color
-		foreach (GameObject block in Blocks) {		
-			MeshRenderer renderer = block.GetComponent<MeshRenderer>();
-			Material material = renderer.material;
-			material.SetColor ("_OutlineColor", player_color);
+	private void OnPieceStateEnter(PieceState state) {	
+		if (state == PieceState.Falling) {
+			ShowOutline(true);
+			GetComponent<InputManager>().enabled = true;
+		}
+		else if (state == PieceState.Landed) {
+			FlattenGameObject();
+			GameObject.FindGameObjectWithTag("GameManager").SendMessage("PieceLanded", PlayerNumber);
 		}
 	}
 
+	private void OnPieceStateExit(PieceState state) {
+		if (state == PieceState.Falling) {
+			GetComponent<InputManager>().enabled = false;
+			ShowOutline (false);
+		}
+	}
+	
+	private void FlattenGameObject() {
+		GameObject block_root = GameObject.FindGameObjectWithTag("BlockRoot");
+		foreach (GameObject block in Blocks) {
+			block.transform.parent = block_root.transform;
+		}
+		ghost.SendMessage("Remove");
+		Destroy (this.gameObject);
+	}
 	
 	public GameObject[] Blocks { get { return blocks; } }
 	
@@ -239,4 +270,10 @@ enum FallType {
 	Normal,
 	Fast,
 	Instant
+}
+
+enum PieceState {
+	Next,
+	Falling,
+	Landed
 }

@@ -42,7 +42,11 @@ public class Board : MonoBehaviour {
 		
 		GameObject[] blocks = GameObject.FindGameObjectsWithTag("Block");
 		foreach (GameObject block in blocks) {
-			if (block.activeSelf) {
+			Block block_component = block.GetComponent<Block>();
+			
+			if (block_component.Falling) continue;
+					
+			if (block_component.Active) {
 				int x = Mathf.RoundToInt(block.transform.position.x);
 				int y = Mathf.RoundToInt(block.transform.position.y);
 			
@@ -56,7 +60,7 @@ public class Board : MonoBehaviour {
 			}
 		}
 		
-		GameObject[] pieces = GameObject.FindGameObjectsWithTag("Piece");
+		/*GameObject[] pieces = GameObject.FindGameObjectsWithTag("Piece");
 		foreach (GameObject piece_object in pieces) {
 			if (piece_object.activeSelf == false) continue;
 			
@@ -72,7 +76,7 @@ public class Board : MonoBehaviour {
 					block_grid[x, y] = piece.PlayerNumber;
 				}
 			}
-		}
+		}*/
 		
 	}
 	
@@ -151,14 +155,15 @@ public class Board : MonoBehaviour {
 	private void clearLine(int y) {
 		GameObject[] blocks = GameObject.FindGameObjectsWithTag("Block");
 		foreach (GameObject block in blocks) {
+			if (block.GetComponent<Block>().Falling) continue;
+		
 			int block_y = Mathf.RoundToInt(block.transform.position.y);
 		
 			if (block_y == y) {
-				block.SetActive(false);
-				Destroy(block); // TODO: Show the cleared effect.
+				block.SendMessage ("Clear");
 			}
 			else if (block_y > y) {
-				block.transform.position = block.transform.position + new Vector3(0,-1,0);
+				block.SendMessage ("MoveDown");
 			}
 		}
 	}

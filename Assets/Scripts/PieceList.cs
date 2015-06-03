@@ -6,7 +6,6 @@ public class PieceList : ScriptableObject {
 
 	public PieceTemplate getRandom() {
 		int piece_number = Random.Range (0, pieces.Length - 1);
-		Debug.Log (piece_number);
 		return pieces[piece_number];
 	}
 }
