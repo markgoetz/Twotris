@@ -12,23 +12,23 @@ MonoBehaviour:
   m_Name: DifficultyManager
   m_EditorClassIdentifier: 
   levels:
-  - PieceFallDelay: 1
-    BetweenPieceDelay: 1.20000005
   - PieceFallDelay: .899999976
-    BetweenPieceDelay: 1.10000002
+    BetweenPieceDelay: 1
   - PieceFallDelay: .800000012
-    BetweenPieceDelay: 1
+    BetweenPieceDelay: .949999988
+  - PieceFallDelay: .74000001
+    BetweenPieceDelay: .899999976
   - PieceFallDelay: .699999988
-    BetweenPieceDelay: 1.39999998
+    BetweenPieceDelay: .5
   - PieceFallDelay: .600000024
-    BetweenPieceDelay: 1.20000005
-  - PieceFallDelay: .5
-    BetweenPieceDelay: 1
-  - PieceFallDelay: .400000006
     BetweenPieceDelay: .800000012
-  - PieceFallDelay: .300000012
-    BetweenPieceDelay: .600000024
+  - PieceFallDelay: .330000013
+    BetweenPieceDelay: .75
+  - PieceFallDelay: .280000001
+    BetweenPieceDelay: .699999988
   - PieceFallDelay: .200000003
-    BetweenPieceDelay: .400000006
-  - PieceFallDelay: .100000001
-    BetweenPieceDelay: .400000006
+    BetweenPieceDelay: .649999976
+  - PieceFallDelay: .129999995
+    BetweenPieceDelay: .600000024
+  - PieceFallDelay: .0599999987
+    BetweenPieceDelay: .550000012

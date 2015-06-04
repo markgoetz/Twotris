@@ -805,7 +805,6 @@ MonoBehaviour:
   scorePerBlock: 10
   scorePerClearedLines: 00000000640000002c01000058020000e8030000
   board: {fileID: 1326592649}
-  stoppedBlock: {fileID: 122756, guid: 896b0b1ed61a744ea9fee614c4174919, type: 2}
   uiManager: {fileID: 319855789}
   dm: {fileID: 11400000, guid: f1aace6160d904df0af53884c5c9e4ad, type: 2}
 --- !u!4 &1958618169

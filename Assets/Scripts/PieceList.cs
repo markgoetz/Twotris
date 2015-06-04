@@ -5,7 +5,7 @@ public class PieceList : ScriptableObject {
 	public PieceTemplate[] pieces;
 
 	public PieceTemplate getRandom() {
-		int piece_number = Random.Range (0, pieces.Length - 1);
+		int piece_number = Random.Range (0, pieces.Length);
 		return pieces[piece_number];
 	}
 }
