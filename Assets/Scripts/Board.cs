@@ -10,6 +10,8 @@ public class Board : MonoBehaviour {
 	public float wallDepth = 3;
 	public float wallThickness = 1;
 	
+	public float timeBetweenClears = .3f;
+	
 	private int[,] block_grid;
 	private bool game_over;
 
@@ -24,7 +26,7 @@ public class Board : MonoBehaviour {
 		left_wall.transform.localScale  = new Vector3(wallThickness, height, wallDepth);	
 		right_wall.transform.localScale = new Vector3(wallThickness, height, wallDepth);	
 		
-		block_grid = new int[width,height];		
+		block_grid = new int[width,height];
 	}
 	
 	void Update() {
@@ -134,14 +136,18 @@ public class Board : MonoBehaviour {
 		}
 		
 		if (clears.Count > 0) {
-			foreach (int y in clears) {
-				clearLine(y);
-			}
-			
-			UpdateBlocks();
+			StartCoroutine("clearLines", clears);
+			UpdateBlocks ();
 		}
 		
 		return clears.Count;
+	}
+	
+	private IEnumerator clearLines(List<int> clears) {
+		foreach (int y in clears) {
+			clearLine (y);
+			yield return new WaitForSeconds(timeBetweenClears);
+		}
 	}
 	
 	private bool isRowFilled(int y) {
@@ -155,7 +161,7 @@ public class Board : MonoBehaviour {
 	private void clearLine(int y) {
 		GameObject[] blocks = GameObject.FindGameObjectsWithTag("Block");
 		foreach (GameObject block in blocks) {
-			if (block.GetComponent<Block>().Falling) continue;
+			if (block.GetComponent<Block>().Falling) continue;  // Must skip over falling blocks, otherwise their transform gets messed up.
 		
 			int block_y = Mathf.RoundToInt(block.transform.position.y);
 		

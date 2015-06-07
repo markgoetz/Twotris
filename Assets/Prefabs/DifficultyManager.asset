@@ -14,13 +14,13 @@ MonoBehaviour:
   levels:
   - PieceFallDelay: .899999976
     BetweenPieceDelay: 1
-  - PieceFallDelay: .800000012
+  - PieceFallDelay: .75
     BetweenPieceDelay: .949999988
-  - PieceFallDelay: .74000001
+  - PieceFallDelay: .620000005
     BetweenPieceDelay: .899999976
-  - PieceFallDelay: .699999988
-    BetweenPieceDelay: .5
-  - PieceFallDelay: .600000024
+  - PieceFallDelay: .5
+    BetweenPieceDelay: .850000024
+  - PieceFallDelay: .400000006
     BetweenPieceDelay: .800000012
   - PieceFallDelay: .330000013
     BetweenPieceDelay: .75

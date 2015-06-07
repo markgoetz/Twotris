@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: .137254909, g: .333333343, b: .490196079, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 2f7c8aa4426144696995ba77c4a7b54f, type: 3}
     m_FontSize: 40
@@ -277,7 +277,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: .0196078438}
+  m_BackGroundColor: {r: .792156875, g: .905882359, b: 1, a: 1}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -538,7 +538,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: .137254909, g: .333333343, b: .490196109, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 2f7c8aa4426144696995ba77c4a7b54f, type: 3}
     m_FontSize: 40
@@ -624,6 +624,48 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1207644142}
+--- !u!1001 &1224296984
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 418462, guid: d4bc2eedcc12c42cf8d1e64649e32e19, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418462, guid: d4bc2eedcc12c42cf8d1e64649e32e19, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418462, guid: d4bc2eedcc12c42cf8d1e64649e32e19, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418462, guid: d4bc2eedcc12c42cf8d1e64649e32e19, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418462, guid: d4bc2eedcc12c42cf8d1e64649e32e19, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418462, guid: d4bc2eedcc12c42cf8d1e64649e32e19, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418462, guid: d4bc2eedcc12c42cf8d1e64649e32e19, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418462, guid: d4bc2eedcc12c42cf8d1e64649e32e19, type: 2}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: d4bc2eedcc12c42cf8d1e64649e32e19, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1326592648
 GameObject:
   m_ObjectHideFlags: 0
@@ -656,6 +698,7 @@ MonoBehaviour:
   wall: {fileID: 179026, guid: feb4b9d0f5bdb4a4d8116946d3c24136, type: 2}
   wallDepth: 3
   wallThickness: 1
+  timeBetweenClears: .200000003
 --- !u!4 &1326592650
 Transform:
   m_ObjectHideFlags: 0
@@ -848,7 +891,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: .137254909, g: .333333343, b: .490196079, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 2f7c8aa4426144696995ba77c4a7b54f, type: 3}
     m_FontSize: 40

@@ -4,7 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(InputManager))]
 public class FallingPiece : MonoBehaviour {
 	//public float movementTime;
-	public float fastFallTime = .06f;
+	public float fastFallTime = .03f;
 	public GameObject fallingBlock;
 	public GameObject ghostPiece;
 	public PlayerColorList playerColorList;
@@ -32,9 +32,6 @@ public class FallingPiece : MonoBehaviour {
 		this.PlayerNumber = player_number;
 		
 		setState(PieceState.Falling);
-		
-		fall_type = FallType.Normal;
-		StartCoroutine("fall");
 	}
 	
 	
@@ -178,6 +175,7 @@ public class FallingPiece : MonoBehaviour {
 		}
 		
 		transform.Rotate(0,0,z_angle);
+		rotateEffect();
 		transform.position = transform.position - new Vector3(farthest_collision_point, 0, 0);	
 	}
 
@@ -191,7 +189,7 @@ public class FallingPiece : MonoBehaviour {
 		int count = 0;
 		foreach (Vector2 location in piece.locations) {
 			GameObject block = Instantiate (fallingBlock) as GameObject;
-			block.SendMessage ("setColor", piece.color);
+			block.GetComponent<Block>().BlockColor = piece.color;
 
 			block.transform.parent = transform;
 			block.transform.localPosition = location;
@@ -233,10 +231,14 @@ public class FallingPiece : MonoBehaviour {
 	
 	private void OnPieceStateEnter(PieceState state) {	
 		if (state == PieceState.Falling) {
+			fall_type = FallType.Normal;
+			StartCoroutine("fall");
+		
 			ShowOutline(true);
 			GetComponent<InputManager>().enabled = true;
 		}
 		else if (state == PieceState.Landed) {
+			landEffect ();
 			FlattenGameObject();
 			GameObject.FindGameObjectWithTag("GameManager").SendMessage("PieceLanded", PlayerNumber);
 		}
@@ -245,6 +247,8 @@ public class FallingPiece : MonoBehaviour {
 	private void OnPieceStateExit(PieceState state) {
 		if (state == PieceState.Falling) {
 			GetComponent<InputManager>().enabled = false;
+			StopCoroutine ("fall");
+			
 			ShowOutline (false);
 		}
 	}
@@ -256,6 +260,21 @@ public class FallingPiece : MonoBehaviour {
 		}
 		ghost.SendMessage("Remove");
 		Destroy (this.gameObject);
+	}
+	
+	private void rotateEffect() {
+		// Sound effect
+		// Tween / wobble
+	}
+	
+	private void landEffect() {
+		// Flash
+		foreach (GameObject block in Blocks) {
+			block.SendMessage ("Flash");
+		}
+		
+		// Sound effect
+		// Squash / stretch
 	}
 	
 	public GameObject[] Blocks { get { return blocks; } }

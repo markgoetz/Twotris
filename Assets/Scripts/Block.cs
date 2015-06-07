@@ -3,9 +3,15 @@ using System.Collections;
 
 public class Block : MonoBehaviour {
 	private bool active = true;
+	public GameObject explosion;
+	public float FlashLength;
 
 	public void Clear() {
 		active = false;
+		
+		GameObject x = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
+		x.GetComponent<ParticleSystem>().startColor = BlockColor;
+		
 		Destroy (gameObject);
 		// TODO: add clear effects / tweening here
 	}
@@ -14,16 +20,33 @@ public class Block : MonoBehaviour {
 		get { return active; }
 	}
 	
-	public void setColor(Color c) {
-		MeshRenderer renderer = GetComponent<MeshRenderer>();
-		Material material = renderer.material;
-		material.SetColor ("_Color", c);
+	public Color BlockColor {
+		get {
+			return GetComponent<MeshRenderer>().material.color;
+		}
+		set {
+			GetComponent<MeshRenderer>().material.color = value;
+		}
+		
 	}
 	
 	public void setOutline(Color c) {
 		MeshRenderer renderer = GetComponent<MeshRenderer>();
 		Material material = renderer.material;
 		material.SetColor ("_OutlineColor", c);
+	}
+	
+	public void Flash() {
+		StartCoroutine("FlashCoroutine");
+	}
+	
+	private IEnumerator FlashCoroutine() {
+		Color current_color = BlockColor;
+		BlockColor = Color.white;
+		
+		yield return new WaitForSeconds(FlashLength);
+		
+		BlockColor = current_color;
 	}
 	
 	public bool Falling {
