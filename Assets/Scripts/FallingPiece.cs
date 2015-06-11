@@ -31,6 +31,10 @@ public class FallingPiece : MonoBehaviour {
 		generateBlocks(piece);
 		this.PlayerNumber = player_number;
 		
+		setState(PieceState.Next);
+	}
+	
+	public void startFalling() {
 		setState(PieceState.Falling);
 	}
 	
@@ -230,6 +234,11 @@ public class FallingPiece : MonoBehaviour {
 	}
 	
 	private void OnPieceStateEnter(PieceState state) {	
+		if (state == PieceState.Next) {
+			ShowOutline(false);
+			GetComponent<InputManager>().enabled = false;
+		}
+	
 		if (state == PieceState.Falling) {
 			fall_type = FallType.Normal;
 			StartCoroutine("fall");
@@ -262,9 +271,16 @@ public class FallingPiece : MonoBehaviour {
 		Destroy (this.gameObject);
 	}
 	
+	private void moveEffect() {
+		// Sound effect
+		// Tween
+		// Squash and stretch
+	}
+	
 	private void rotateEffect() {
 		// Sound effect
-		// Tween / wobble
+		// Tween
+		// Wobble
 	}
 	
 	private void landEffect() {
@@ -274,6 +290,7 @@ public class FallingPiece : MonoBehaviour {
 		}
 		
 		// Sound effect
+		// Screenshake
 		// Squash / stretch
 	}
 	

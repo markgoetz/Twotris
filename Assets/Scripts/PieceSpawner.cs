@@ -6,9 +6,17 @@ public class PieceSpawner : MonoBehaviour {
 	public int playerNumber;
 	public DifficultyManager dm;
 	public PieceList pieceList;
+	public GameObject nextPieceLocation;
+	
+	private GameObject next_piece;
 
 	// Use this for initialization
 	void Start () {
+		SpawnFirstPiece();
+	}
+	
+	void SpawnFirstPiece() {
+		createNextPiece();
 		SpawnPiece ();
 	}
 	
@@ -21,9 +29,20 @@ public class PieceSpawner : MonoBehaviour {
 		SpawnPiece();
 	}
 	
-	void SpawnPiece() {
+	void createNextPiece() {
 		float z_angle = 90 * Mathf.Floor(4 * Random.value);
-		GameObject block = Instantiate (fallingPiece, transform.position, Quaternion.Euler(0,0,z_angle)) as GameObject;		
-		block.GetComponent<FallingPiece>().init (playerNumber, pieceList.getRandom());
+		GameObject piece = Instantiate (fallingPiece, nextPieceLocation.transform.position, Quaternion.Euler(0,0,z_angle)) as GameObject;		
+		piece.GetComponent<FallingPiece>().init (playerNumber, pieceList.getRandom());
+		next_piece = piece;
+	}
+	
+	void startPieceFalling() {
+		next_piece.transform.position = transform.position;
+		next_piece.SendMessage("startFalling");
+	}
+	
+	void SpawnPiece() {
+		startPieceFalling();
+		createNextPiece ();
 	}
 }
