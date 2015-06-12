@@ -12,6 +12,8 @@ public class Board : MonoBehaviour {
 	
 	public float timeBetweenClears = .3f;
 	
+	public CameraShakeParameters shakeOnClear;
+	
 	private int[,] block_grid;
 	private bool game_over;
 
@@ -172,11 +174,20 @@ public class Board : MonoBehaviour {
 				block.SendMessage ("MoveDown");
 			}
 		}
+		
+		clearLineEffect();
 	}
 	
 	public int Width  { get { return width;  }}
 	public int Height { get { return height; }}
 	public bool GameOver { get { return game_over; }}
+	
+	
+	private void clearLineEffect() {
+		// Sound effect
+		// Camera shake
+		Camera.main.SendMessage ("Shake", shakeOnClear);
+	}
 	
 	/*void OnDrawGizmos() {
 		if (block_grid == null) return;

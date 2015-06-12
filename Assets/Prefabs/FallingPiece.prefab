@@ -45,6 +45,9 @@ MonoBehaviour:
   ghostPiece: {fileID: 194044, guid: 80e4db89afa594bc585c974ed6f262e7, type: 2}
   playerColorList: {fileID: 11400000, guid: d3fa13a2c17824975999c3bf26ada1b1, type: 2}
   dm: {fileID: 11400000, guid: f1aace6160d904df0af53884c5c9e4ad, type: 2}
+  shakeOnLand:
+    amount: .0199999996
+    duration: .0599999987
 --- !u!114 &11405600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -63,7 +66,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: shakeOnLand.duration
+      value: .0599999987
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: shakeOnLand.amount
+      value: .0199999996
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 194044}

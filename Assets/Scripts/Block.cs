@@ -6,7 +6,16 @@ public class Block : MonoBehaviour {
 	public GameObject explosion;
 	public float FlashLength;
 
+	private AbstractGoTween _tween;
+
 	public void Clear() {
+		if( _tween != null )
+		{
+			_tween.complete();
+			_tween.destroy();
+			_tween = null;
+		}
+		
 		active = false;
 		
 		GameObject x = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
@@ -37,7 +46,8 @@ public class Block : MonoBehaviour {
 	}
 	
 	public void Flash() {
-		StartCoroutine("FlashCoroutine");
+		_tween = Go.to (transform, FlashLength, new GoTweenConfig().materialColor(Color.white).setIterations(2, GoLoopType.PingPong));
+		//StartCoroutine("FlashCoroutine");
 	}
 	
 	private IEnumerator FlashCoroutine() {

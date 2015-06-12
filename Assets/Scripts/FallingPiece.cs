@@ -9,6 +9,7 @@ public class FallingPiece : MonoBehaviour {
 	public GameObject ghostPiece;
 	public PlayerColorList playerColorList;
 	public DifficultyManager dm;
+	public CameraShakeParameters shakeOnLand;
 
 	private int size = 1;
 	private bool can_move = true;
@@ -19,6 +20,8 @@ public class FallingPiece : MonoBehaviour {
 	private InputManager input;
 	private FallType fall_type;
 	private PieceState state;
+	
+	private AbstractGoTween _tween;
 	
 	private GameObject[] blocks;
 	
@@ -77,6 +80,7 @@ public class FallingPiece : MonoBehaviour {
 			if (movement.magnitude > 0) {
 				// Don't use transform.translate here as it will totally mess with the rotation.
 				transform.position = transform.position + movement;
+				moveEffect (movement);
 				//StartCoroutine ("LerpMovement", movement);
 			}
 		}
@@ -103,17 +107,7 @@ public class FallingPiece : MonoBehaviour {
 		yield break;
 	}*/
 	
-	private void startMoving() {
-		can_move = false;
-		//animator.SetBool("walking", true);
-		/*audiomgr.PlaySound(
-			(movementType == PlayerMovementType.Jump) ? PlayerSounds.JumpSound : PlayerSounds.WalkSound
-			);*/
-	}
-	
-	private void stopMoving() {
-		can_move = true;
-	}
+
 	
 	private float getFallTime() {
 		if (fall_type == FallType.Normal)
@@ -179,7 +173,7 @@ public class FallingPiece : MonoBehaviour {
 		}
 		
 		transform.Rotate(0,0,z_angle);
-		rotateEffect();
+		rotateEffect(z_angle);
 		transform.position = transform.position - new Vector3(farthest_collision_point, 0, 0);	
 	}
 
@@ -271,26 +265,43 @@ public class FallingPiece : MonoBehaviour {
 		Destroy (this.gameObject);
 	}
 	
-	private void moveEffect() {
+	private void moveEffect(Vector2 movement) {
 		// Sound effect
 		// Tween
+		
+		
 		// Squash and stretch
 	}
 	
-	private void rotateEffect() {
+	private void rotateEffect(float z_angle) {
 		// Sound effect
 		// Tween
+		
 		// Wobble
+		_tween = Go.to (
+			transform,
+			.1f,
+			new GoTweenConfig()
+				.scale (Vector3.one * 1.2f)
+				.setEaseType (GoEaseType.ElasticInOut)
+				.setIterations(2, GoLoopType.PingPong)
+		);
 	}
 	
 	private void landEffect() {
+		// reset!
+		resetTween();
+	
 		// Flash
 		foreach (GameObject block in Blocks) {
 			block.SendMessage ("Flash");
 		}
 		
 		// Sound effect
+		
 		// Screenshake
+		Camera.main.SendMessage("Shake", shakeOnLand);
+		
 		// Squash / stretch
 	}
 	
@@ -300,7 +311,20 @@ public class FallingPiece : MonoBehaviour {
 		Gizmos.color = Color.green;
 		Gizmos.DrawCube (transform.position, Vector3.one);
 	}*/
+	
+	private void resetTween() {
+		if( _tween != null )
+		{
+			_tween.complete();
+			_tween.destroy();
+			_tween = null;
+		}
+		
+		transform.localScale = Vector3.one;
+	}
 }
+
+
 
 enum FallType {
 	Normal,
