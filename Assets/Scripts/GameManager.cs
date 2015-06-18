@@ -48,4 +48,8 @@ public class GameManager : MonoBehaviour {
 			Destroy (piece);
 		}		
 	}
+	
+	void Start() {
+		dm.Lines = 0;
+	}
 }

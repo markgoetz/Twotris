@@ -17,9 +17,9 @@ public class Board : MonoBehaviour {
 	private int[,] block_grid;
 	private bool game_over;
 
-	// Use this for initialization
 	void Start () {
 		// create walls.
+		// TODO: floor is composed of pieces, for the "game over" effect.
 		GameObject floor      = Instantiate (wall, new Vector3((width - 1) / 2f, -1,                0), Quaternion.identity) as GameObject;
 		GameObject left_wall  = Instantiate (wall, new Vector3(-1,               (height - 1) / 2f, 0), Quaternion.identity) as GameObject;
 		GameObject right_wall = Instantiate (wall, new Vector3(width,            (height - 1) / 2f, 0), Quaternion.identity) as GameObject;
@@ -29,10 +29,7 @@ public class Board : MonoBehaviour {
 		right_wall.transform.localScale = new Vector3(wallThickness, height, wallDepth);	
 		
 		block_grid = new int[width,height];
-	}
-	
-	void Update() {
-		UpdateBlocks ();
+		UpdateBlocks (); // Call this on init because otherwise it will init to 0 (there is a block there)
 	}
 	
 	private void UpdateBlocks() {
@@ -44,9 +41,9 @@ public class Board : MonoBehaviour {
 			}
 		}
 		
-		GameObject[] blocks = GameObject.FindGameObjectsWithTag("Block");
-		foreach (GameObject block in blocks) {
-			Block block_component = block.GetComponent<Block>();
+		//GameObject[] blocks = transform.chGameObject.FindGameObjectsWithTag("Block");
+		foreach (Transform block in transform) {
+			Block block_component = block.gameObject.GetComponent<Block>();
 			
 			if (block_component.Falling) continue;
 					
@@ -127,7 +124,7 @@ public class Board : MonoBehaviour {
 	}
 	
 	public int processClears() {
-		UpdateBlocks();
+		//UpdateBlocks();
 		
 		List<int> clears = new List<int>();
 		// Go from top to bottom so that the line numbers line up correctly.
@@ -175,7 +172,16 @@ public class Board : MonoBehaviour {
 			}
 		}
 		
+		UpdateBlocks ();
 		clearLineEffect();
+	}
+	
+	public void AddBlocks(GameObject[] blocks) {
+		foreach (GameObject block in blocks) {
+			block.transform.parent = transform;
+		}
+		
+		UpdateBlocks();
 	}
 	
 	public int Width  { get { return width;  }}

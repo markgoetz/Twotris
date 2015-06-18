@@ -9,22 +9,24 @@ public class Block : MonoBehaviour {
 	private AbstractGoTween _tween;
 
 	public void Clear() {
-		if( _tween != null )
-		{
+		active = false;
+		
+		ClearEffect();
+		
+		Destroy (gameObject);
+	}
+
+	private void ClearEffect() {
+		if( _tween != null ) {
 			_tween.complete();
 			_tween.destroy();
 			_tween = null;
 		}
 		
-		active = false;
-		
 		GameObject x = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
 		x.GetComponent<ParticleSystem>().startColor = BlockColor;
-		
-		Destroy (gameObject);
-		// TODO: add clear effects / tweening here
 	}
-	
+			
 	public bool Active { 
 		get { return active; }
 	}
@@ -36,7 +38,13 @@ public class Block : MonoBehaviour {
 		set {
 			GetComponent<MeshRenderer>().material.color = value;
 		}
-		
+	}
+	
+	public Vector3 GamePosition {
+		get {
+			Transform piece = transform.parent.parent;
+			return piece.position + piece.rotation * transform.localPosition;
+		}
 	}
 	
 	public void setOutline(Color c) {
@@ -46,22 +54,19 @@ public class Block : MonoBehaviour {
 	}
 	
 	public void Flash() {
-		_tween = Go.to (transform, FlashLength, new GoTweenConfig().materialColor(Color.white).setIterations(2, GoLoopType.PingPong));
-		//StartCoroutine("FlashCoroutine");
-	}
-	
-	private IEnumerator FlashCoroutine() {
-		Color current_color = BlockColor;
-		BlockColor = Color.white;
-		
-		yield return new WaitForSeconds(FlashLength);
-		
-		BlockColor = current_color;
+		_tween = Go.to (
+			transform,
+			FlashLength,
+			new GoTweenConfig()
+				.materialColor(Color.white)
+				.setIterations(2, GoLoopType.PingPong)
+				.setEaseType(GoEaseType.CubicOut)
+			);
 	}
 	
 	public bool Falling {
 		get {
-			if (transform.parent.tag == "BlockRoot")
+			if (transform.parent.tag == "Board")
 				return false;
 				
 			return true;
@@ -74,4 +79,10 @@ public class Block : MonoBehaviour {
 	
 		transform.position = transform.position + new Vector3(0,-1,0);
 	}
+	
+	/*void OnDrawGizmos() {
+		if (!Falling) return;
+		Gizmos.color = Color.red;
+		Gizmos.DrawCube (GamePosition, Vector3.one * .5f);
+	}*/
 }

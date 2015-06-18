@@ -6,11 +6,11 @@ public class CameraShaker : MonoBehaviour {
 
 	public void Shake(CameraShakeParameters csp) {
 		stopRunningTween();
-		_tween = Go.to( transform, csp.duration, new GoTweenConfig().shake( Vector3.one * csp.amount, GoShakeType.Position ) );
+		_tween = Go.to( transform, csp.duration, new GoTweenConfig().shake( Vector3.one * csp.amount, GoShakeType.Position ).shake (Vector3.one * csp.amount, GoShakeType.Eulers));
 	}
 	
 	private void stopRunningTween() {
-	if( _tween != null ) {
+		if( _tween != null ) {
 			_tween.complete();
 			_tween.destroy();
 			_tween = null;

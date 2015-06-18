@@ -4,7 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(InputManager))]
 public class FallingPiece : MonoBehaviour {
 	//public float movementTime;
-	public float fastFallTime = .03f;
+	public float fastFallTime = .0000005f;
 	public GameObject fallingBlock;
 	public GameObject ghostPiece;
 	public PlayerColorList playerColorList;
@@ -16,6 +16,7 @@ public class FallingPiece : MonoBehaviour {
 	private Board board;
 	private bool falling = true;
 	private GameObject ghost;
+	private GameObject tween_object;
 
 	private InputManager input;
 	private FallType fall_type;
@@ -26,8 +27,9 @@ public class FallingPiece : MonoBehaviour {
 	private GameObject[] blocks;
 	
 	void Awake() {
-		input = GetComponent<InputManager>();	
+		input = GetComponent<InputManager>();
 		board = GameObject.FindGameObjectWithTag("Board").GetComponent<Board>();
+		tween_object = transform.GetChild(0).gameObject;
 	}
 	
 	public void init(int player_number, PieceTemplate piece) {
@@ -72,7 +74,7 @@ public class FallingPiece : MonoBehaviour {
 		if (movement.x != 0) {
 
 			foreach (GameObject block in blocks) {
-				if (board.Collide(block.transform.position + movement, PlayerNumber) == BlockCollision.Solid) {
+				if (board.Collide(block.GetComponent <Block>().GamePosition + movement, PlayerNumber) == BlockCollision.Solid) {
 					movement = Vector2.zero;
 				}
 			}
@@ -133,13 +135,15 @@ public class FallingPiece : MonoBehaviour {
 			
 			// STEP 2: See if you landed.
 			foreach (GameObject block in blocks) {
-				if (board.Collide (block.transform.position + Vector3.down * size, PlayerNumber) == BlockCollision.Solid) {	
+				if (board.Collide (block.GetComponent<Block>().GamePosition + Vector3.down * size, PlayerNumber) == BlockCollision.Solid) {	
 					stopFalling ();
 				}
 			}
 			
-			if (falling)
+			if (falling) {
 				transform.position = transform.position + Vector3.down * size;
+				tween_object.SendMessage ("Move", Vector3.down * size);
+			}
 		}
 		
 		setState(PieceState.Landed);
@@ -189,7 +193,7 @@ public class FallingPiece : MonoBehaviour {
 			GameObject block = Instantiate (fallingBlock) as GameObject;
 			block.GetComponent<Block>().BlockColor = piece.color;
 
-			block.transform.parent = transform;
+			block.transform.parent = tween_object.transform;
 			block.transform.localPosition = location;
 			
 			blocks[count++] = block.gameObject;
@@ -257,20 +261,17 @@ public class FallingPiece : MonoBehaviour {
 	}
 	
 	private void FlattenGameObject() {
-		GameObject block_root = GameObject.FindGameObjectWithTag("BlockRoot");
-		foreach (GameObject block in Blocks) {
-			block.transform.parent = block_root.transform;
-		}
+		GameObject board = GameObject.FindGameObjectWithTag("Board");
+		board.SendMessage ("AddBlocks", Blocks);
+		
 		ghost.SendMessage("Remove");
 		Destroy (this.gameObject);
 	}
 	
-	private void moveEffect(Vector2 movement) {
+	private void moveEffect(Vector3 movement) {
 		// Sound effect
-		// Tween
-		
-		
-		// Squash and stretch
+		// Tween, squash and stretch
+		tween_object.SendMessage("Move", movement);
 	}
 	
 	private void rotateEffect(float z_angle) {
@@ -291,6 +292,8 @@ public class FallingPiece : MonoBehaviour {
 	private void landEffect() {
 		// reset!
 		resetTween();
+		
+		tween_object.SendMessage ("Stop");
 	
 		// Flash
 		foreach (GameObject block in Blocks) {

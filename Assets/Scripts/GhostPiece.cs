@@ -46,7 +46,7 @@ public class GhostPiece : MonoBehaviour {
 					Destroy(gameObject);
 					return;
 				}
-				if (board.Collide(block.transform.position + Vector3.down * y_offset, piece.PlayerNumber) == BlockCollision.Solid)
+				if (board.Collide(block.GetComponent<Block>().GamePosition + Vector3.down * y_offset, piece.PlayerNumber) == BlockCollision.Solid)
 					collided = true;
 			}
 		}
