@@ -75,7 +75,7 @@ MonoBehaviour:
   playerColorList: {fileID: 11400000, guid: d3fa13a2c17824975999c3bf26ada1b1, type: 2}
   dm: {fileID: 11400000, guid: f1aace6160d904df0af53884c5c9e4ad, type: 2}
   shakeOnLand:
-    amount: .0199999996
+    amount: .129999995
     duration: .0599999987
 --- !u!114 &11405600
 MonoBehaviour:
@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d8b7ac74fe548d491b3e6000652395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tweenFactor: 1
-  acceleration: 100
+  tweenFactor: .100000001
+  acceleration: 200
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -115,15 +115,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: shakeOnLand.amount
-      value: .0199999996
+      value: .129999995
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: tweenFactor
-      value: 1
+      value: .100000001
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: acceleration
-      value: 100
+      value: 200
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

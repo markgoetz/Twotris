@@ -800,9 +800,9 @@ MonoBehaviour:
   wall: {fileID: 179026, guid: feb4b9d0f5bdb4a4d8116946d3c24136, type: 2}
   wallDepth: 3
   wallThickness: 1
-  timeBetweenClears: .200000003
+  timeBetweenClears: .25
   shakeOnClear:
-    amount: .5
+    amount: .800000012
     duration: .400000006
 --- !u!4 &1326592650
 Transform:

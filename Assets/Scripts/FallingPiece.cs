@@ -68,22 +68,31 @@ public class FallingPiece : MonoBehaviour {
 	}
 	
 	void Update () {
-		handleKeyInput();
-		Vector3 movement = getMovement();
-		
-		if (movement.x != 0) {
-
-			foreach (GameObject block in blocks) {
-				if (board.Collide(block.GetComponent <Block>().GamePosition + movement, PlayerNumber) == BlockCollision.Solid) {
-					movement = Vector2.zero;
+	
+		if (state == PieceState.Falling) {
+			handleKeyInput();
+			Vector3 movement = getMovement();
+			
+			if (movement.x != 0) {
+	
+				foreach (GameObject block in blocks) {
+					if (board.Collide(block.GetComponent <Block>().GamePosition + movement, PlayerNumber) == BlockCollision.Solid) {
+						movement = Vector2.zero;
+					}
+				}
+				
+				if (movement.magnitude > 0) {
+					// Don't use transform.translate here as it will totally mess with the rotation.
+					transform.position = transform.position + movement;
+					moveEffect (movement);
+					//StartCoroutine ("LerpMovement", movement);
 				}
 			}
-			
-			if (movement.magnitude > 0) {
-				// Don't use transform.translate here as it will totally mess with the rotation.
-				transform.position = transform.position + movement;
-				moveEffect (movement);
-				//StartCoroutine ("LerpMovement", movement);
+		}
+		
+		else if (state == PieceState.WaitingForEffect) {
+			if (GetComponentInChildren<PieceTweener>().Done) {
+				setState (PieceState.Landed);
 			}
 		}
 	}
@@ -146,7 +155,7 @@ public class FallingPiece : MonoBehaviour {
 			}
 		}
 		
-		setState(PieceState.Landed);
+		setState(PieceState.WaitingForEffect);
 		yield break;
 	}
 	
@@ -198,8 +207,6 @@ public class FallingPiece : MonoBehaviour {
 			
 			blocks[count++] = block.gameObject;
 		}
-		
-		generateGhost ();
 	}
 	
 	private void generateGhost() {
@@ -238,6 +245,7 @@ public class FallingPiece : MonoBehaviour {
 		}
 	
 		if (state == PieceState.Falling) {
+			generateGhost();
 			fall_type = FallType.Normal;
 			StartCoroutine("fall");
 		
@@ -293,7 +301,7 @@ public class FallingPiece : MonoBehaviour {
 		// reset!
 		resetTween();
 		
-		tween_object.SendMessage ("Stop");
+		//tween_object.SendMessage ("Stop");
 	
 		// Flash
 		foreach (GameObject block in Blocks) {
@@ -338,5 +346,6 @@ enum FallType {
 enum PieceState {
 	Next,
 	Falling,
+	WaitingForEffect,
 	Landed
 }

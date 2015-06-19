@@ -43,7 +43,13 @@ public class Block : MonoBehaviour {
 	public Vector3 GamePosition {
 		get {
 			Transform piece = transform.parent.parent;
-			return piece.position + piece.rotation * transform.localPosition;
+			Vector3 position = piece.position + piece.rotation * transform.localPosition;
+			
+			position.x = Mathf.RoundToInt(position.x);
+			position.y = Mathf.RoundToInt(position.y);
+			position.z = Mathf.RoundToInt(position.z);
+			
+			return position;
 		}
 	}
 	

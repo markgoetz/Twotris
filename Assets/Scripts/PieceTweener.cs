@@ -63,6 +63,12 @@ public class PieceTweener : MonoBehaviour {
 		transform.position = transform.position - movement;
 	}
 	
+	public bool Done {
+		get {
+			return (transform.localPosition == Vector3.zero);
+		}
+	}
+	
 	public void Stop() {
 		transform.localPosition = Vector3.zero;
 		velocity = Vector3.zero;
