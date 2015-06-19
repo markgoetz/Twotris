@@ -73,8 +73,18 @@ public class PieceTweener : MonoBehaviour {
 	// Handles squash and stretch.
 	void TweenMovement() {
 		// TODO: What if you're moving in X and Y?
-		//float scale_factor = Mathf.Abs (transform.localPosition.x);
 		
-		//transform.localScale = new Vector3(1 + tweenFactor * scale_factor, 1 + 1 / (tweenFactor * scale_factor), 1 + 1 / (tweenFactor * scale_factor));
+		Vector3 unrotated_position = transform.rotation * transform.localPosition;
+		
+		float scale_factor = 1 + Mathf.Abs (unrotated_position.x) * tweenFactor;
+		
+		Vector3 scale = transform.rotation * new Vector3(scale_factor, 1 / scale_factor, 1 / scale_factor);
+		if (scale.x < 0)
+			scale.x = -scale.x;
+		if (scale.y < 0)
+			scale.y = -scale.y;
+			
+		transform.localScale = scale;
+		
 	}
 }
