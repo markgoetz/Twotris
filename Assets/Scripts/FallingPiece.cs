@@ -97,29 +97,6 @@ public class FallingPiece : MonoBehaviour {
 		}
 	}
 	
-	/*private IEnumerator LerpMovement(Vector2 movement) {
-		if (movement.magnitude == 0) yield break;
-		
-		float start_x = transform.position.x;
-		startMoving();
-		
-		float elapsed_time = 0;
-		
-		while (elapsed_time < movementTime) {
-			float x = Mathf.Lerp(start_x, start_x + movement.x, Mathf.Sqrt(elapsed_time / movementTime));
-			transform.position = new Vector2(x, transform.position.y);
-			elapsed_time += Time.deltaTime;
-			yield return null;
-		}
-		
-		//transform.position = movement_start_position + movement;		
-		stopMoving();
-		
-		yield break;
-	}*/
-	
-
-	
 	private float getFallTime() {
 		if (fall_type == FallType.Normal)
 			return dm.PieceFallDelay;
@@ -285,6 +262,7 @@ public class FallingPiece : MonoBehaviour {
 	private void rotateEffect(float z_angle) {
 		// Sound effect
 		// Tween
+		tween_object.SendMessage ("Rotate", z_angle);
 		
 		// Wobble
 		_tween = Go.to (

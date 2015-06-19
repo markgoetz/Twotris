@@ -67,7 +67,7 @@ public class Block : MonoBehaviour {
 				.materialColor(Color.white)
 				.setIterations(2, GoLoopType.PingPong)
 				.setEaseType(GoEaseType.CubicOut)
-			);
+		);
 	}
 	
 	public bool Falling {
