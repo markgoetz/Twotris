@@ -2,13 +2,16 @@
 using System.Collections;
 
 public class PieceTweener : MonoBehaviour {
-	public float tweenFactor;
+	public float stretchFactor;
+	public float tweenTime;
 	public float acceleration;
 	public float rotation_acceleration;
 
 	private Vector3 velocity = Vector3.zero;
 	private float rotation_velocity = 0;
-
+	
+	private AbstractGoTween _tween;
+	
 
 	void Update () {
 		handleMovement();
@@ -39,7 +42,7 @@ public class PieceTweener : MonoBehaviour {
 			velocity.y = 0;
 		}
 		
-		TweenMovement();
+		StretchMovement();
 	}
 	
 	void handleRotation() {
@@ -62,9 +65,34 @@ public class PieceTweener : MonoBehaviour {
 	
 	public void Move(Vector3 movement) {
 		transform.position = transform.position - movement;
+		
+		/*if( _move_tween != null )
+		{
+			_move_tween.complete();
+			_move_tween.destroy();
+			_move_tween = null;
+		}
+		
+		
+		_move_tween = Go.to (
+			transform,
+			tweenTime,
+			new GoTweenConfig().localPosition(new Vector3(0,0,0)).setEaseType(GoEaseType.CubicOut)
+		);*/
 	}
 	
 	public void Rotate(float z_angle) {
+		// Wobble
+		resetTween ();
+		_tween = Go.to (
+			transform,
+			.1f,
+			new GoTweenConfig()
+				.scale (Vector3.one * 1.2f)
+				.setEaseType (GoEaseType.ElasticInOut)
+				.setIterations(2, GoLoopType.PingPong)
+		);
+		
 		transform.localRotation = Quaternion.Euler(0,0,transform.localRotation.eulerAngles.z - z_angle);
 	}
 	
@@ -75,6 +103,7 @@ public class PieceTweener : MonoBehaviour {
 	}
 	
 	public void Stop() {
+		resetTween ();
 		transform.localPosition = Vector3.zero;
 		velocity = Vector3.zero;
 		transform.localScale = Vector3.one;
@@ -82,14 +111,24 @@ public class PieceTweener : MonoBehaviour {
 	
 	
 	// Handles squash and stretch.
-	void TweenMovement() {
+	void StretchMovement() {
 		// TODO: What if you're moving in X and Y?
 		
 		Vector3 unrotated_position = transform.parent.rotation * transform.localPosition;
+		Vector3 scale;
 		
-		float scale_factor = 1 + Mathf.Abs (unrotated_position.x) * tweenFactor;
+		//if (unrotated_position.x == 0) {
+			float scale_factor = 1 + Mathf.Abs (unrotated_position.x) * stretchFactor;
+			scale = transform.parent.rotation * new Vector3(scale_factor, 1 / scale_factor, 1 / scale_factor);
+		/*}
+		else {
+			float scale_factor = 1 + Mathf.Abs (unrotated_position.y) * stretchFactor;
+			scale = transform.parent.rotation * new Vector3(1 / scale_factor, scale_factor, 1 / scale_factor);
+		}*/
 		
-		Vector3 scale = transform.parent.rotation * new Vector3(scale_factor, 1 / scale_factor, 1 / scale_factor);
+		
+		
+		
 		if (scale.x < 0)
 			scale.x = -scale.x;
 		if (scale.y < 0)
@@ -97,5 +136,16 @@ public class PieceTweener : MonoBehaviour {
 			
 		transform.localScale = scale;
 		
+	}
+	
+	private void resetTween() {
+		if( _tween != null )
+		{
+			_tween.complete();
+			_tween.destroy();
+			_tween = null;
+		}
+		
+		transform.localScale = Vector3.one;
 	}
 }

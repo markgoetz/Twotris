@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Block : MonoBehaviour {
 	private bool active = true;
 	public GameObject explosion;
@@ -77,6 +78,11 @@ public class Block : MonoBehaviour {
 				
 			return true;
 		}
+	}
+	
+	public void Die() {
+		GetComponent<Rigidbody>().isKinematic = false;
+		GetComponent<Rigidbody>().useGravity = true;
 	}
 	
 	public void MoveDown() {

@@ -16,17 +16,35 @@ public class Board : MonoBehaviour {
 	
 	private int[,] block_grid;
 	private bool game_over;
+	
+	private GameObject[] floors;
 
 	void Start () {
 		// create walls.
 		// TODO: floor is composed of pieces, for the "game over" effect.
-		GameObject floor      = Instantiate (wall, new Vector3((width - 1) / 2f, -1,                0), Quaternion.identity) as GameObject;
-		GameObject left_wall  = Instantiate (wall, new Vector3(-1,               (height - 1) / 2f, 0), Quaternion.identity) as GameObject;
-		GameObject right_wall = Instantiate (wall, new Vector3(width,            (height - 1) / 2f, 0), Quaternion.identity) as GameObject;
+		
+		
+		
+		GameObject left_wall  = Instantiate (wall, new Vector3(-1,    (height - 1) / 2f, 0), Quaternion.identity) as GameObject;
+		GameObject right_wall = Instantiate (wall, new Vector3(width, (height - 1) / 2f, 0), Quaternion.identity) as GameObject;
 		  
-		floor.transform.localScale      = new Vector3(width + 2, wallThickness, wallDepth);	
-		left_wall.transform.localScale  = new Vector3(wallThickness, height, wallDepth);	
-		right_wall.transform.localScale = new Vector3(wallThickness, height, wallDepth);	
+		left_wall.transform.localScale  = new Vector3(wallThickness, height + 1, wallDepth);	
+		right_wall.transform.localScale = new Vector3(wallThickness, height + 1, wallDepth);	
+		
+		int floor_count = Mathf.RoundToInt(width / 1.5f);
+		floors = new GameObject[floor_count];
+		
+		for (int i = 0; i < floor_count; i++) {
+
+			GameObject floor = Instantiate (
+				wall,
+				new Vector3(.25f + 1.5f * i, -1, 0),
+				Quaternion.identity)
+			as GameObject;
+			
+			floor.transform.localScale = new Vector3(1.5f, wallThickness, wallDepth);
+			floors[i] = floor;
+		}
 		
 		block_grid = new int[width,height];
 		UpdateBlocks (); // Call this on init because otherwise it will init to 0 (there is a block there)
@@ -193,6 +211,16 @@ public class Board : MonoBehaviour {
 		// Sound effect
 		// Camera shake
 		Camera.main.SendMessage ("Shake", shakeOnClear);
+	}
+	
+	public void DieEffect() {
+		foreach (GameObject floor in floors) {
+			floor.SendMessage ("Fall");
+		}
+		
+		foreach (Transform block in transform) {
+			block.gameObject.SendMessage ("Die");
+		}
 	}
 	
 	/*void OnDrawGizmos() {

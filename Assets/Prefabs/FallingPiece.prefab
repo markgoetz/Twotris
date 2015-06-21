@@ -100,8 +100,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d8b7ac74fe548d491b3e6000652395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tweenFactor: .100000001
+  stretchFactor: .200000003
+  tweenTime: .25
   acceleration: 200
+  rotation_acceleration: 3000
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -124,6 +126,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: acceleration
       value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: rotation_acceleration
+      value: 3000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: tweenTime
+      value: .25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: stretchFactor
+      value: .200000003
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

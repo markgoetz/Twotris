@@ -12,6 +12,7 @@ GameObject:
   - 65: {fileID: 6596268}
   - 23: {fileID: 2322450}
   - 54: {fileID: 5492880}
+  - 114: {fileID: 11496712}
   m_Layer: 8
   m_Name: Wall 1
   m_TagString: Wall
@@ -89,13 +90,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &11496712
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 179026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccc04ce51c8a643baa54c4c454d5f99c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDelayTime: .5
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxDelayTime
+      value: .5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 179026}

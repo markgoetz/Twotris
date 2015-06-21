@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour {
 	private void gameOver() {
 		uiManager.gameOver();
 		
+		board.SendMessage("DieEffect");
+		
 		foreach (PieceSpawner spawner in spawners) {
 			Destroy(spawner.gameObject);
 		}

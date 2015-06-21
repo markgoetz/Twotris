@@ -10,15 +10,17 @@ public class GhostPiece : MonoBehaviour {
 
 	private Board board;
 	private float GHOST_COLOR_ALPHA = .3f;
+	private GameObject[] blocks;
 
 	void Start () {
 		board = GameObject.FindGameObjectWithTag("Board").GetComponent<Board>();
+		blocks = piece.Blocks;
 		
 		for (int i = 0; i < 4; i++) {
 			GameObject ghost_block = Instantiate (blockPrefab);
 			ghost_block.transform.parent = transform;
 			
-			transform.GetChild(i).transform.localPosition = piece.Blocks[i].transform.localPosition;
+			transform.GetChild(i).transform.localPosition = blocks[i].transform.localPosition;
 			
 			MeshRenderer renderer = ghost_block.GetComponent<MeshRenderer>();
 			Color player_color = playerColorList.Colors[piece.PlayerNumber];
@@ -33,8 +35,6 @@ public class GhostPiece : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		GameObject[] blocks = piece.Blocks;
-		
 		int y_offset = 0;
 		bool collided = false;
 		
@@ -55,9 +55,6 @@ public class GhostPiece : MonoBehaviour {
 		
 		transform.position = piece.transform.position + Vector3.down * y_offset;
 		transform.rotation = piece.transform.rotation;
-		
-		// HACK: this shouldn't be necessary every frame.
-
 	}
 	
 	public FallingPiece Piece {

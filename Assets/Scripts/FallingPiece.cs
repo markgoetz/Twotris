@@ -21,9 +21,7 @@ public class FallingPiece : MonoBehaviour {
 	private InputManager input;
 	private FallType fall_type;
 	private PieceState state;
-	
-	private AbstractGoTween _tween;
-	
+		
 	private GameObject[] blocks;
 	
 	void Awake() {
@@ -261,25 +259,12 @@ public class FallingPiece : MonoBehaviour {
 	
 	private void rotateEffect(float z_angle) {
 		// Sound effect
-		// Tween
+		// Tween, wobble
 		tween_object.SendMessage ("Rotate", z_angle);
-		
-		// Wobble
-		_tween = Go.to (
-			transform,
-			.1f,
-			new GoTweenConfig()
-				.scale (Vector3.one * 1.2f)
-				.setEaseType (GoEaseType.ElasticInOut)
-				.setIterations(2, GoLoopType.PingPong)
-		);
 	}
 	
 	private void landEffect() {
-		// reset!
-		resetTween();
-		
-		//tween_object.SendMessage ("Stop");
+		tween_object.SendMessage ("Stop");
 	
 		// Flash
 		foreach (GameObject block in Blocks) {
@@ -290,8 +275,6 @@ public class FallingPiece : MonoBehaviour {
 		
 		// Screenshake
 		Camera.main.SendMessage("Shake", shakeOnLand);
-		
-		// Squash / stretch
 	}
 	
 	public GameObject[] Blocks { get { return blocks; } }
@@ -300,17 +283,6 @@ public class FallingPiece : MonoBehaviour {
 		Gizmos.color = Color.green;
 		Gizmos.DrawCube (transform.position, Vector3.one);
 	}*/
-	
-	private void resetTween() {
-		if( _tween != null )
-		{
-			_tween.complete();
-			_tween.destroy();
-			_tween = null;
-		}
-		
-		transform.localScale = Vector3.one;
-	}
 }
 
 
