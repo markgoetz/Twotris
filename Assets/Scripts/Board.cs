@@ -3,16 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Board : MonoBehaviour {
-	public int height = 25;
-	public int width  = 25;
+	[Header("Dimensions")]
+	public int height = 20;
+	public int width  = 12;
 	
+	[Header("Wall Construction")]
 	public GameObject wall;
 	public float wallDepth = 3;
 	public float wallThickness = 1;
 	
+	[Header("Line Clearing")]
+	public ScoreKeeper scoreKeeper;
+	public int[] pointsPerLine;
 	public float timeBetweenClears = .3f;
 	
-	public CameraShakeParameters shakeOnClear;
+	[Header("Object References")]
+	public DifficultyManager dm;
+	public UIManager ui;
 	
 	private int[,] block_grid;
 	private bool game_over;
@@ -20,11 +27,7 @@ public class Board : MonoBehaviour {
 	private GameObject[] floors;
 
 	void Start () {
-		// create walls.
-		// TODO: floor is composed of pieces, for the "game over" effect.
-		
-		
-		
+		// create walls.		
 		GameObject left_wall  = Instantiate (wall, new Vector3(-1,    (height - 1) / 2f, 0), Quaternion.identity) as GameObject;
 		GameObject right_wall = Instantiate (wall, new Vector3(width, (height - 1) / 2f, 0), Quaternion.identity) as GameObject;
 		  
@@ -78,25 +81,6 @@ public class Board : MonoBehaviour {
 				}
 			}
 		}
-		
-		/*GameObject[] pieces = GameObject.FindGameObjectsWithTag("Piece");
-		foreach (GameObject piece_object in pieces) {
-			if (piece_object.activeSelf == false) continue;
-			
-			FallingPiece piece = piece_object.GetComponent<FallingPiece>();
-			
-			foreach (GameObject piece_block in piece.Blocks) {
-				int x = Mathf.RoundToInt(piece_block.transform.position.x);
-				int y = Mathf.RoundToInt(piece_block.transform.position.y);
-				
-				if (y >= height) continue;
-				
-				if (piece_block.activeSelf && block_grid[x, y] == -1) {
-					block_grid[x, y] = piece.PlayerNumber;
-				}
-			}
-		}*/
-		
 	}
 	
 	public BlockCollision Collide(Vector3 position, int player_number) {
@@ -141,7 +125,7 @@ public class Board : MonoBehaviour {
 		return BlockCollision.OtherPlayer;
 	}
 	
-	public int processClears() {
+	public void processClears() {
 		//UpdateBlocks();
 		
 		List<int> clears = new List<int>();
@@ -156,13 +140,17 @@ public class Board : MonoBehaviour {
 			StartCoroutine("clearLines", clears);
 			UpdateBlocks ();
 		}
-		
-		return clears.Count;
 	}
 	
 	private IEnumerator clearLines(List<int> clears) {
+		int line_count = 0;
+	
 		foreach (int y in clears) {
+			line_count++;
 			clearLine (y);
+			
+			dm.AddLine();
+			scoreKeeper.AddScore(pointsPerLine[line_count] - pointsPerLine[line_count - 1]);
 			yield return new WaitForSeconds(timeBetweenClears);
 		}
 	}
@@ -200,17 +188,33 @@ public class Board : MonoBehaviour {
 		}
 		
 		UpdateBlocks();
+		processClears();
+		
+		if (game_over) {
+			DieEffect ();
+			
+			GameObject[] spawners = GameObject.FindGameObjectsWithTag("PieceSpawner");
+			foreach (GameObject spawner in spawners) {
+				Destroy (spawner);
+			}
+			
+			GameObject[] pieces = GameObject.FindGameObjectsWithTag ("Piece");
+			foreach (GameObject piece in pieces) {
+				Destroy (piece);
+			}
+			
+			ui.Die();
+		}
 	}
 	
 	public int Width  { get { return width;  }}
 	public int Height { get { return height; }}
-	public bool GameOver { get { return game_over; }}
 	
 	
 	private void clearLineEffect() {
 		// Sound effect
 		// Camera shake
-		Camera.main.SendMessage ("Shake", shakeOnClear);
+		Camera.main.SendMessage ("Shake", CameraShakeType.Clear);
 	}
 	
 	public void DieEffect() {

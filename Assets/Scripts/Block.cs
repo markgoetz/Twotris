@@ -8,6 +8,10 @@ public class Block : MonoBehaviour {
 	public float FlashLength;
 
 	private AbstractGoTween _tween;
+	
+	void Start() {
+		GetComponent<Rigidbody>().detectCollisions = false;
+	}
 
 	public void Clear() {
 		active = false;
@@ -81,6 +85,7 @@ public class Block : MonoBehaviour {
 	}
 	
 	public void Die() {
+		GetComponent<Rigidbody>().detectCollisions = true;
 		GetComponent<Rigidbody>().isKinematic = false;
 		GetComponent<Rigidbody>().useGravity = true;
 	}

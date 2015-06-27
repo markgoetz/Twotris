@@ -10,14 +10,20 @@ public class UIManager : MonoBehaviour {
 	public Text gameOverText;
 	
 	private float _fadeTime = 3;
-
-	public void updateText(int score, int lines, int level) {
+	
+	public void SetScore(int score) {
 		scoreText.text = "Score: " + score;
+	}
+	
+	public void SetLines(int lines) {
 		linesText.text = "Lines: " + lines;
+	}
+	
+	public void SetLevel(int level) {
 		levelText.text = "Level: " + level;
 	}
 	
-	public void gameOver() {
+	public void Die() {
 		StartCoroutine("gameOverFade");
 	}
 	

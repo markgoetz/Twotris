@@ -32,7 +32,7 @@ public class PieceSpawner : MonoBehaviour {
 	void createNextPiece() {
 		float z_angle = 90 * Mathf.Floor(4 * Random.value);
 		GameObject piece = Instantiate (fallingPiece, nextPieceLocation.transform.position, Quaternion.Euler(0,0,z_angle)) as GameObject;		
-		piece.GetComponent<FallingPiece>().init (playerNumber, pieceList.getRandom());
+		piece.GetComponent<FallingPiece>().init (this, pieceList.getRandom());
 		next_piece = piece;
 	}
 	

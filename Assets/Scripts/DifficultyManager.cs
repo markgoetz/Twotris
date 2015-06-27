@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class DifficultyManager : ScriptableObject {
-	private int lines = 0;
+public class DifficultyManager : MonoBehaviour {
+	public UIManager ui;
 	public DifficultyLevel[] levels = {
 		new DifficultyLevel(2f,   2f),
 		new DifficultyLevel(1.8f, 1.8f),
@@ -14,6 +14,21 @@ public class DifficultyManager : ScriptableObject {
 		new DifficultyLevel(.6f, .6f),
         new DifficultyLevel(.4f, .4f)
 	};
+	private int lines;
+	
+	public void AddLine() {
+	
+		int old_level = LevelNumber;
+	
+		lines++;
+		
+		int new_level = LevelNumber;
+		
+		ui.SetLines(lines);
+		
+		if (new_level != old_level)
+			ui.SetLevel(LevelNumber);
+	}
 
 	public int Lines {
 		get { return lines; }
@@ -21,7 +36,7 @@ public class DifficultyManager : ScriptableObject {
 	}
 
 	private DifficultyLevel _getCurrentLevel() {
-		int level = Level;
+		int level = LevelNumber;
 		
 		if (level >= levels.Length)
 			level = levels.Length - 1;
@@ -29,7 +44,7 @@ public class DifficultyManager : ScriptableObject {
 		return levels[level];
 	}
 	
-	public int Level {
+	public int LevelNumber {
 		get { 
 			return lines / 10;
 		}

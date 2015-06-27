@@ -74,9 +74,7 @@ MonoBehaviour:
   ghostPiece: {fileID: 194044, guid: 80e4db89afa594bc585c974ed6f262e7, type: 2}
   playerColorList: {fileID: 11400000, guid: d3fa13a2c17824975999c3bf26ada1b1, type: 2}
   dm: {fileID: 11400000, guid: f1aace6160d904df0af53884c5c9e4ad, type: 2}
-  shakeOnLand:
-    amount: .129999995
-    duration: .0599999987
+  points: 10
 --- !u!114 &11405600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -103,7 +101,7 @@ MonoBehaviour:
   stretchFactor: .200000003
   tweenTime: .25
   acceleration: 200
-  rotation_acceleration: 3000
+  rotationAcceleration: 4000
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -129,7 +127,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: rotation_acceleration
-      value: 3000
+      value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: tweenTime
@@ -138,6 +136,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: stretchFactor
       value: .200000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: rotationAcceleration
+      value: 4000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: points
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

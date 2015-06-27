@@ -8,15 +8,16 @@ public class FallingPiece : MonoBehaviour {
 	public GameObject fallingBlock;
 	public GameObject ghostPiece;
 	public PlayerColorList playerColorList;
-	public DifficultyManager dm;
-	public CameraShakeParameters shakeOnLand;
-
+	public int points;
+	
 	private int size = 1;
 	private bool can_move = true;
 	private Board board;
 	private bool falling = true;
+	private DifficultyManager dm;	
 	private GameObject ghost;
 	private GameObject tween_object;
+	private PieceSpawner piece_spawner;
 
 	private InputManager input;
 	private FallType fall_type;
@@ -27,12 +28,14 @@ public class FallingPiece : MonoBehaviour {
 	void Awake() {
 		input = GetComponent<InputManager>();
 		board = GameObject.FindGameObjectWithTag("Board").GetComponent<Board>();
+		dm = GameObject.FindGameObjectWithTag("DifficultyManager").GetComponent<DifficultyManager>();
 		tween_object = transform.GetChild(0).gameObject;
 	}
 	
-	public void init(int player_number, PieceTemplate piece) {
+	public void init(PieceSpawner spawner, PieceTemplate piece) {
 		generateBlocks(piece);
-		this.PlayerNumber = player_number;
+		PlayerNumber = spawner.playerNumber;
+		piece_spawner = spawner;
 		
 		setState(PieceState.Next);
 	}
@@ -228,10 +231,18 @@ public class FallingPiece : MonoBehaviour {
 			GetComponent<InputManager>().enabled = true;
 		}
 		else if (state == PieceState.Landed) {
-			landEffect ();
-			FlattenGameObject();
-			GameObject.FindGameObjectWithTag("GameManager").SendMessage("PieceLanded", PlayerNumber);
+			landed();
 		}
+	}
+	
+	private void landed() {
+		landEffect();
+		piece_spawner.SpawnPieceWithDelay();
+		board.AddBlocks (Blocks);
+		ghost.SendMessage("Remove");
+		GameObject.FindGameObjectWithTag("ScoreKeeper").SendMessage("AddScore", points);
+		
+		Destroy (this.gameObject);
 	}
 
 	private void OnPieceStateExit(PieceState state) {
@@ -241,14 +252,6 @@ public class FallingPiece : MonoBehaviour {
 			
 			ShowOutline (false);
 		}
-	}
-	
-	private void FlattenGameObject() {
-		GameObject board = GameObject.FindGameObjectWithTag("Board");
-		board.SendMessage ("AddBlocks", Blocks);
-		
-		ghost.SendMessage("Remove");
-		Destroy (this.gameObject);
 	}
 	
 	private void moveEffect(Vector3 movement) {
@@ -274,7 +277,7 @@ public class FallingPiece : MonoBehaviour {
 		// Sound effect
 		
 		// Screenshake
-		Camera.main.SendMessage("Shake", shakeOnLand);
+		Camera.main.SendMessage("Shake", CameraShakeType.Land);
 	}
 	
 	public GameObject[] Blocks { get { return blocks; } }

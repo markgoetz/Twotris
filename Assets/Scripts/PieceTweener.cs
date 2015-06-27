@@ -5,7 +5,7 @@ public class PieceTweener : MonoBehaviour {
 	public float stretchFactor;
 	public float tweenTime;
 	public float acceleration;
-	public float rotation_acceleration;
+	public float rotationAcceleration;
 
 	private Vector3 velocity = Vector3.zero;
 	private float rotation_velocity = 0;
@@ -51,7 +51,7 @@ public class PieceTweener : MonoBehaviour {
 		if (z == 0) return;
 		
 		float direction = Mathf.Sign (z - 180);
-		rotation_velocity += rotation_acceleration * Time.deltaTime * direction;
+		rotation_velocity += rotationAcceleration * Time.deltaTime * direction;
 		
 	
 		transform.localRotation = Quaternion.Euler (0,0,z + rotation_velocity * Time.deltaTime);
