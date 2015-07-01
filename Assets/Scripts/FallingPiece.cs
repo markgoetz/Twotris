@@ -21,12 +21,15 @@ public class FallingPiece : MonoBehaviour {
 
 	private InputManager input;
 	private FallType fall_type;
+	private PieceSoundManager audio_manager;
 	private PieceState state;
 		
 	private GameObject[] blocks;
 	
+	
 	void Awake() {
 		input = GetComponent<InputManager>();
+		audio_manager = GetComponent<PieceSoundManager>();	
 		board = GameObject.FindGameObjectWithTag("Board").GetComponent<Board>();
 		dm = GameObject.FindGameObjectWithTag("DifficultyManager").GetComponent<DifficultyManager>();
 		tween_object = transform.GetChild(0).gameObject;
@@ -256,12 +259,15 @@ public class FallingPiece : MonoBehaviour {
 	
 	private void moveEffect(Vector3 movement) {
 		// Sound effect
+		audio_manager.PlaySound(PlayerSounds.Move);
 		// Tween, squash and stretch
 		tween_object.SendMessage("Move", movement);
 	}
 	
 	private void rotateEffect(float z_angle) {
 		// Sound effect
+		audio_manager.PlaySound(PlayerSounds.Rotate);
+		
 		// Tween, wobble
 		tween_object.SendMessage ("Rotate", z_angle);
 	}
@@ -275,6 +281,8 @@ public class FallingPiece : MonoBehaviour {
 		}
 		
 		// Sound effect
+		audio_manager.PlaySound(PlayerSounds.Land);
+		
 		
 		// Screenshake
 		Camera.main.SendMessage("Shake", CameraShakeType.Land);

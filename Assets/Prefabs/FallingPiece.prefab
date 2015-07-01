@@ -26,6 +26,8 @@ GameObject:
   - 4: {fileID: 435832}
   - 114: {fileID: 11404894}
   - 114: {fileID: 11405600}
+  - 82: {fileID: 8216430}
+  - 114: {fileID: 11486692}
   m_Layer: 0
   m_Name: FallingPiece
   m_TagString: Piece
@@ -58,6 +60,75 @@ Transform:
   m_Children: []
   m_Father: {fileID: 435832}
   m_RootOrder: 0
+--- !u!82 &8216430
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194044}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &11404894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -73,7 +144,6 @@ MonoBehaviour:
   fallingBlock: {fileID: 189244, guid: 0480bc6c5618a4b0a9b83e2d5091bec2, type: 2}
   ghostPiece: {fileID: 194044, guid: 80e4db89afa594bc585c974ed6f262e7, type: 2}
   playerColorList: {fileID: 11400000, guid: d3fa13a2c17824975999c3bf26ada1b1, type: 2}
-  dm: {fileID: 11400000, guid: f1aace6160d904df0af53884c5c9e4ad, type: 2}
   points: 10
 --- !u!114 &11405600
 MonoBehaviour:
@@ -87,6 +157,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 0
+--- !u!114 &11486692
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37d10d4d406e645e89f77fa705caa609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSound: {fileID: 8300000, guid: 513382663c5a34598b0ea85f62cdb661, type: 3}
+  rotateSound: {fileID: 8300000, guid: 4b44615abcd9545fe95e0111b0799076, type: 3}
+  fallSound: {fileID: 8300000, guid: 0e90096036d8e45f28d8e1d8af643e2d, type: 3}
+  landSound: {fileID: 8300000, guid: 15bd7381ddef74f9a8bf2ffc6dafeb96, type: 3}
 --- !u!114 &11492298
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -145,6 +230,22 @@ Prefab:
       propertyPath: points
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: moveSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 513382663c5a34598b0ea85f62cdb661, type: 3}
+    - target: {fileID: 0}
+      propertyPath: rotateSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 4b44615abcd9545fe95e0111b0799076, type: 3}
+    - target: {fileID: 0}
+      propertyPath: fallSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 0e90096036d8e45f28d8e1d8af643e2d, type: 3}
+    - target: {fileID: 0}
+      propertyPath: landSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 15bd7381ddef74f9a8bf2ffc6dafeb96, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 194044}

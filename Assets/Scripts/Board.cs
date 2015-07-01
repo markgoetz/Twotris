@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent (typeof(BoardSoundManager))]
 public class Board : MonoBehaviour {
 	[Header("Dimensions")]
 	public int height = 20;
@@ -25,8 +26,11 @@ public class Board : MonoBehaviour {
 	private bool game_over;
 	
 	private GameObject[] floors;
+	private BoardSoundManager audio_manager;
 
 	void Start () {
+		audio_manager = GetComponent<BoardSoundManager>();
+	
 		// create walls.		
 		GameObject left_wall  = Instantiate (wall, new Vector3(-1,    (height - 1) / 2f, 0), Quaternion.identity) as GameObject;
 		GameObject right_wall = Instantiate (wall, new Vector3(width, (height - 1) / 2f, 0), Quaternion.identity) as GameObject;
@@ -147,7 +151,7 @@ public class Board : MonoBehaviour {
 	
 		foreach (int y in clears) {
 			line_count++;
-			clearLine (y);
+			clearLine (y, line_count);
 			
 			dm.AddLine();
 			scoreKeeper.AddScore(pointsPerLine[line_count] - pointsPerLine[line_count - 1]);
@@ -163,7 +167,7 @@ public class Board : MonoBehaviour {
 		return true;
 	}
 	
-	private void clearLine(int y) {
+	private void clearLine(int y, int count) {
 		GameObject[] blocks = GameObject.FindGameObjectsWithTag("Block");
 		foreach (GameObject block in blocks) {
 			if (block.GetComponent<Block>().Falling) continue;  // Must skip over falling blocks, otherwise their transform gets messed up.
@@ -179,13 +183,15 @@ public class Board : MonoBehaviour {
 		}
 		
 		UpdateBlocks ();
-		clearLineEffect();
+		clearLineEffect(count);
 	}
 	
 	public void AddBlocks(GameObject[] blocks) {
 		foreach (GameObject block in blocks) {
 			block.transform.parent = transform;
 		}
+		
+		audio_manager.PlaySound(BoardSounds.land);
 		
 		UpdateBlocks();
 		processClears();
@@ -211,8 +217,17 @@ public class Board : MonoBehaviour {
 	public int Height { get { return height; }}
 	
 	
-	private void clearLineEffect() {
+	private void clearLineEffect(int count) {
 		// Sound effect
+		if (count == 1)
+			audio_manager.PlaySound(BoardSounds.lineClear1);
+		if (count == 2)
+			audio_manager.PlaySound(BoardSounds.lineClear2);
+		if (count == 3)
+			audio_manager.PlaySound(BoardSounds.lineClear3);
+		if (count == 4)
+			audio_manager.PlaySound(BoardSounds.lineClear4);
+				
 		// Camera shake
 		Camera.main.SendMessage ("Shake", CameraShakeType.Clear);
 	}
