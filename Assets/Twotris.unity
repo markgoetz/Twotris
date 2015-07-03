@@ -97,6 +97,7 @@ GameObject:
   - 224: {fileID: 202612482}
   - 222: {fileID: 202612484}
   - 114: {fileID: 202612483}
+  - 114: {fileID: 202612485}
   m_Layer: 5
   m_Name: Lines Text
   m_TagString: Untagged
@@ -158,6 +159,21 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 202612481}
+--- !u!114 &202612485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 202612481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 943fb313b88314a7db261351d8394803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenStartTime: .0299999993
+  tweenEndTime: .349999994
+  tweenTextSize: 55
+  tweenTextColor: {r: 1, g: .957606494, b: .720588207, a: 1}
 --- !u!1 &225307393
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,6 +591,7 @@ GameObject:
   - 224: {fileID: 996977731}
   - 222: {fileID: 996977733}
   - 114: {fileID: 996977732}
+  - 114: {fileID: 996977734}
   m_Layer: 5
   m_Name: Level Text
   m_TagString: Untagged
@@ -634,6 +651,21 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 996977730}
+--- !u!114 &996977734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 996977730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 943fb313b88314a7db261351d8394803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenStartTime: .150000006
+  tweenEndTime: 1
+  tweenTextSize: 70
+  tweenTextColor: {r: 1, g: .956862748, b: .721568644, a: 1}
 --- !u!1 &1010306247
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,7 +859,7 @@ MonoBehaviour:
   wallThickness: 1
   scoreKeeper: {fileID: 1335448253}
   pointsPerLine: 00000000640000002c01000058020000e8030000
-  timeBetweenClears: .25
+  timeBetweenClears: .300000012
   dm: {fileID: 1374899920}
   ui: {fileID: 319855789}
 --- !u!4 &1326592650
@@ -1293,6 +1325,7 @@ GameObject:
   - 224: {fileID: 2142226955}
   - 222: {fileID: 2142226954}
   - 114: {fileID: 2142226953}
+  - 114: {fileID: 2142226956}
   m_Layer: 5
   m_Name: Score Text
   m_TagString: Untagged
@@ -1352,3 +1385,18 @@ RectTransform:
   m_AnchoredPosition: {x: 20, y: 120}
   m_SizeDelta: {x: 160, y: 40}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2142226956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2142226952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 943fb313b88314a7db261351d8394803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenStartTime: .0299999993
+  tweenEndTime: .200000003
+  tweenTextSize: 45
+  tweenTextColor: {r: .551470578, g: .800653517, b: 1, a: 1}

@@ -13,14 +13,17 @@ public class UIManager : MonoBehaviour {
 	
 	public void SetScore(int score) {
 		scoreText.text = "Score: " + score;
+		scoreText.SendMessage("Tween");
 	}
 	
 	public void SetLines(int lines) {
 		linesText.text = "Lines: " + lines;
+		linesText.SendMessage("Tween");
 	}
 	
 	public void SetLevel(int level) {
 		levelText.text = "Level: " + level;
+		levelText.SendMessage("Tween");
 	}
 	
 	public void Die() {

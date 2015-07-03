@@ -233,6 +233,10 @@ public class FallingPiece : MonoBehaviour {
 			ShowOutline(true);
 			GetComponent<InputManager>().enabled = true;
 		}
+		else if (state == PieceState.WaitingForEffect) {
+			if (fall_type == FallType.Instant)
+				audio_manager.PlaySound(PlayerSounds.Fall);
+		}
 		else if (state == PieceState.Landed) {
 			landed();
 		}
