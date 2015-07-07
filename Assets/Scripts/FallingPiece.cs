@@ -16,7 +16,7 @@ public class FallingPiece : MonoBehaviour {
 	private bool falling = true;
 	private DifficultyManager dm;	
 	private GameObject ghost;
-	private GameObject tween_object;
+	private PieceTweener tweener;
 	private PieceSpawner piece_spawner;
 
 	private InputManager input;
@@ -32,7 +32,7 @@ public class FallingPiece : MonoBehaviour {
 		audio_manager = GetComponent<PieceSoundManager>();	
 		board = GameObject.FindGameObjectWithTag("Board").GetComponent<Board>();
 		dm = GameObject.FindGameObjectWithTag("DifficultyManager").GetComponent<DifficultyManager>();
-		tween_object = transform.GetChild(0).gameObject;
+		tweener = GetComponentInChildren<PieceTweener>();
 	}
 	
 	public void init(PieceSpawner spawner, PieceTemplate piece) {
@@ -132,7 +132,7 @@ public class FallingPiece : MonoBehaviour {
 			
 			if (falling) {
 				transform.position = transform.position + Vector3.down * size;
-				tween_object.SendMessage ("Move", Vector3.down * size);
+				tweener.Move (Vector3.down * size);
 			}
 		}
 		
@@ -183,7 +183,7 @@ public class FallingPiece : MonoBehaviour {
 			GameObject block = Instantiate (fallingBlock) as GameObject;
 			block.GetComponent<Block>().BlockColor = piece.color;
 
-			block.transform.parent = tween_object.transform;
+			block.transform.parent = tweener.gameObject.transform;
 			block.transform.localPosition = location;
 			
 			blocks[count++] = block.gameObject;
@@ -223,6 +223,7 @@ public class FallingPiece : MonoBehaviour {
 		if (state == PieceState.Next) {
 			ShowOutline(false);
 			GetComponent<InputManager>().enabled = false;
+			tweener.AppearEffect();
 		}
 	
 		if (state == PieceState.Falling) {
@@ -234,8 +235,10 @@ public class FallingPiece : MonoBehaviour {
 			GetComponent<InputManager>().enabled = true;
 		}
 		else if (state == PieceState.WaitingForEffect) {
-			if (fall_type == FallType.Instant)
+			if (fall_type == FallType.Instant) {
 				audio_manager.PlaySound(PlayerSounds.Fall);
+				tweener.Fastfall = true;
+			}
 		}
 		else if (state == PieceState.Landed) {
 			landed();
@@ -265,7 +268,7 @@ public class FallingPiece : MonoBehaviour {
 		// Sound effect
 		audio_manager.PlaySound(PlayerSounds.Move);
 		// Tween, squash and stretch
-		tween_object.SendMessage("Move", movement);
+		tweener.Move (movement);
 	}
 	
 	private void rotateEffect(float z_angle) {
@@ -273,11 +276,11 @@ public class FallingPiece : MonoBehaviour {
 		audio_manager.PlaySound(PlayerSounds.Rotate);
 		
 		// Tween, wobble
-		tween_object.SendMessage ("Rotate", z_angle);
+		tweener.Rotate(z_angle);
 	}
 	
 	private void landEffect() {
-		tween_object.SendMessage ("Stop");
+		tweener.Stop ();
 	
 		// Flash
 		foreach (GameObject block in Blocks) {

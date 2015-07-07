@@ -2,16 +2,23 @@
 using System.Collections;
 
 public class PieceTweener : MonoBehaviour {
-	public float stretchFactor;
-	public float tweenTime;
+	public float movementStretchFactor;
+	public float fallStretchFactor = .01f;
+	//public float tweenTime;
 	public float acceleration;
 	public float rotationAcceleration;
 
+	public float appearEffectTime = 1f;
+
 	private Vector3 velocity = Vector3.zero;
 	private float rotation_velocity = 0;
+	private bool fast_fall;
 	
 	private AbstractGoTween _tween;
 	
+	public void AppearEffect() {
+		transform.scaleFrom (appearEffectTime, Vector3.one * .01f).easeType = GoEaseType.BackOut;
+	}
 
 	void Update () {
 		handleMovement();
@@ -25,10 +32,9 @@ public class PieceTweener : MonoBehaviour {
 		);
 		
 
-		velocity.x += acceleration * Time.deltaTime * -Mathf.Sign (transform.localPosition.x);
-		velocity.y += acceleration * Time.deltaTime * -Mathf.Sign (transform.localPosition.y);
+		velocity.x += acceleration * Time.deltaTime * -direction.x;
+		velocity.y += acceleration * Time.deltaTime * -direction.y;
 		
-			
 	
 		transform.localPosition = transform.localPosition + velocity * Time.deltaTime;
 		
@@ -65,20 +71,6 @@ public class PieceTweener : MonoBehaviour {
 	
 	public void Move(Vector3 movement) {
 		transform.position = transform.position - movement;
-		
-		/*if( _move_tween != null )
-		{
-			_move_tween.complete();
-			_move_tween.destroy();
-			_move_tween = null;
-		}
-		
-		
-		_move_tween = Go.to (
-			transform,
-			tweenTime,
-			new GoTweenConfig().localPosition(new Vector3(0,0,0)).setEaseType(GoEaseType.CubicOut)
-		);*/
 	}
 	
 	public void Rotate(float z_angle) {
@@ -89,7 +81,7 @@ public class PieceTweener : MonoBehaviour {
 			.1f,
 			new GoTweenConfig()
 				.scale (Vector3.one * 1.2f)
-				.setEaseType (GoEaseType.ElasticInOut)
+				.setEaseType (GoEaseType.ElasticOut)
 				.setIterations(2, GoLoopType.PingPong)
 		);
 		
@@ -103,6 +95,7 @@ public class PieceTweener : MonoBehaviour {
 	}
 	
 	public void Stop() {
+		Debug.Log ("Stop");
 		resetTween ();
 		transform.localPosition = Vector3.zero;
 		velocity = Vector3.zero;
@@ -111,31 +104,27 @@ public class PieceTweener : MonoBehaviour {
 	
 	
 	// Handles squash and stretch.
-	void StretchMovement() {
-		// TODO: What if you're moving in X and Y?
-		
+	void StretchMovement() {		
 		Vector3 unrotated_position = transform.parent.rotation * transform.localPosition;
+		Vector3 rotated_velocity = transform.parent.rotation * velocity;
 		Vector3 scale;
 		
-		//if (unrotated_position.x == 0) {
-			float scale_factor = 1 + Mathf.Abs (unrotated_position.x) * stretchFactor;
-			scale = transform.parent.rotation * new Vector3(scale_factor, 1 / scale_factor, 1 / scale_factor);
-		/*}
-		else {
-			float scale_factor = 1 + Mathf.Abs (unrotated_position.y) * stretchFactor;
+		if (fast_fall) {
+			float scale_factor = 1 + Mathf.Abs (rotated_velocity.y) * fallStretchFactor;
 			scale = transform.parent.rotation * new Vector3(1 / scale_factor, scale_factor, 1 / scale_factor);
-		}*/
-		
-		
-		
-		
+			if (scale_factor == 1) Debug.Log (transform.rotation.eulerAngles.z + " " + velocity.y + " " + scale);
+		}
+		else {
+			float scale_factor = 1 + Mathf.Abs (unrotated_position.x) * movementStretchFactor;
+			scale = transform.parent.rotation * new Vector3(scale_factor, 1 / scale_factor, 1 / scale_factor);
+		}
+
 		if (scale.x < 0)
 			scale.x = -scale.x;
 		if (scale.y < 0)
 			scale.y = -scale.y;
 			
 		transform.localScale = scale;
-		
 	}
 	
 	private void resetTween() {
@@ -147,5 +136,10 @@ public class PieceTweener : MonoBehaviour {
 		}
 		
 		transform.localScale = Vector3.one;
+	}
+	
+	public bool Fastfall {
+		get { return fast_fall; }
+		set { fast_fall = value; }
 	}
 }

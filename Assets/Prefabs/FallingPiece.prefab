@@ -183,10 +183,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d8b7ac74fe548d491b3e6000652395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stretchFactor: .200000003
-  tweenTime: .25
+  movementStretchFactor: 0
+  fallStretchFactor: .00999999978
   acceleration: 200
   rotationAcceleration: 4000
+  appearEffectTime: .200000003
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -246,6 +247,10 @@ Prefab:
       propertyPath: landSound
       value: 
       objectReference: {fileID: 8300000, guid: 15bd7381ddef74f9a8bf2ffc6dafeb96, type: 3}
+    - target: {fileID: 0}
+      propertyPath: appearEffectTime
+      value: .200000003
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 194044}

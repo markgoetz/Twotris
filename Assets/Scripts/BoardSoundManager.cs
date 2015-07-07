@@ -34,6 +34,9 @@ public class BoardSoundManager : MonoBehaviour {
 		if (sound_type == BoardSounds.lineClear4) {
 			clip = lineClear4;
 		}
+		if (sound_type == BoardSounds.levelUp) {
+			clip = levelUp;
+		}
 		if (sound_type == BoardSounds.die) {
 			clip = die;
 		}
