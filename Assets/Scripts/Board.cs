@@ -26,6 +26,7 @@ public class Board : MonoBehaviour {
 	private bool game_over;
 	
 	private GameObject[] floors;
+	private GameObject[] columns;
 	private BoardSoundManager audio_manager;
 
 	void Start () {
@@ -54,34 +55,40 @@ public class Board : MonoBehaviour {
 		}
 		
 		block_grid = new int[width,height];
+		
+		columns = new GameObject[width];
+		for (int i = 0; i < width; i++) {
+			columns[i] = new GameObject();
+			columns[i].transform.position = new Vector3(i, 0, 0);
+			columns[i].transform.parent = transform;
+		}
+		
 		UpdateBlocks (); // Call this on init because otherwise it will init to 0 (there is a block there)
 	}
 	
 	private void UpdateBlocks() {
 		game_over = false;
 	
-		for (int i = 0; i < block_grid.GetLength(0); i++) {
-			for (int j = 0; j < block_grid.GetLength(1); j++) {
-				block_grid[i,j] = -1;
+		for (int x = 0; x < block_grid.GetLength(0); x++) {
+			for (int y = 0; y < block_grid.GetLength(1); y++) {
+				block_grid[x,y] = -1;
 			}
-		}
-		
-		//GameObject[] blocks = transform.chGameObject.FindGameObjectsWithTag("Block");
-		foreach (Transform block in transform) {
-			Block block_component = block.gameObject.GetComponent<Block>();
-			
-			if (block_component.Falling) continue;
-					
-			if (block_component.Active) {
-				int x = Mathf.RoundToInt(block.transform.position.x);
-				int y = Mathf.RoundToInt(block.transform.position.y);
-			
-				if (y >= height) {
-					game_over = true;
-				}
-			
-				else {
-					block_grid[ x, y ] = 0;
+
+			foreach (Transform block in columns[x].transform) {
+				Block block_component = block.gameObject.GetComponent<Block>();
+								
+				if (block_component.Falling) continue;
+						
+				if (block_component.Active) {
+					int y = Mathf.RoundToInt(block.transform.position.y);
+				
+					if (y >= height) {
+						game_over = true;
+					}
+				
+					else {
+						block_grid[ x, y ] = 0;
+					}
 				}
 			}
 		}
@@ -168,17 +175,15 @@ public class Board : MonoBehaviour {
 	}
 	
 	private void clearLine(int y, int count) {
-		GameObject[] blocks = GameObject.FindGameObjectsWithTag("Block");
-		foreach (GameObject block in blocks) {
-			if (block.GetComponent<Block>().Falling) continue;  // Must skip over falling blocks, otherwise their transform gets messed up.
-		
-			int block_y = Mathf.RoundToInt(block.transform.position.y);
-		
-			if (block_y == y) {
-				block.SendMessage ("Clear");
-			}
-			else if (block_y > y) {
-				block.SendMessage ("MoveDown");
+		for (int x = 0; x < block_grid.GetLength(0); x++) {
+			foreach (Transform block in columns[x].transform) {
+				int block_y = Mathf.RoundToInt(block.transform.position.y);
+				if (block_y == y) {
+					block.SendMessage ("Clear");
+				}
+				else if (block_y > y) {
+					block.SendMessage ("MoveDown");
+				}
 			}
 		}
 		
@@ -187,8 +192,19 @@ public class Board : MonoBehaviour {
 	}
 	
 	public void AddBlocks(GameObject[] blocks) {
+		GoTweenConfig squash_config  = new GoTweenConfig().scale(new Vector3(1.3f, .7f, 1.3f));
+		GoTweenConfig restore_config = new GoTweenConfig().scale(new Vector3(1f, 1f, 1f));
+	
 		foreach (GameObject block in blocks) {
-			block.transform.parent = transform;
+			int x = Mathf.RoundToInt(block.transform.position.x);
+			block.transform.parent = columns[x].transform;
+			
+			GoTween squash_tween  = new GoTween( columns[x].transform, .25f, squash_config);
+			GoTween restore_tween = new GoTween( columns[x].transform, .25f, restore_config);
+			
+			var flow = new GoTweenFlow();
+			flow.insert( 0, squash_tween ).insert( .25f, restore_tween );
+			flow.play();
 		}
 		
 		audio_manager.PlaySound(BoardSounds.land);
@@ -237,12 +253,37 @@ public class Board : MonoBehaviour {
 			floor.SendMessage ("Fall");
 		}
 		
-		foreach (Transform block in transform) {
-			block.gameObject.SendMessage ("Die");
+		for (int x = 0; x < width; x++) {
+			foreach (Transform block in columns[x].transform) {
+				block.gameObject.SendMessage ("Die");
+			}
 		}
 	}
 	
-	/*void OnDrawGizmos() {
+	public Vector3 Centroid {
+		get {
+			int block_count = 0;
+			Vector3 total_centroid = Vector3.zero;
+			
+			for (int x = 0; x < width; x++) {
+				for (int y = 0; y < height; y++) {
+					if (block_grid[x,y] == 0) {
+						total_centroid += new Vector3(x, y, 0);
+						block_count++;
+					}
+				}
+			}
+			
+			if (block_count > 0) {
+				return total_centroid / block_count;
+			}
+			else {
+				throw new CameraTrackerException();
+			}
+		}
+	}
+	
+	void OnDrawGizmos() {
 		if (block_grid == null) return;
 	
 		for (int x = 0; x < width; x++) {
@@ -259,7 +300,7 @@ public class Board : MonoBehaviour {
 				}
 			}
 		}
-	}*/
+	}
 }
 
 public enum BlockCollision {

@@ -261,6 +261,7 @@ GameObject:
   - 124: {fileID: 268271244}
   - 81: {fileID: 268271243}
   - 114: {fileID: 268271248}
+  - 114: {fileID: 268271249}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -351,6 +352,20 @@ MonoBehaviour:
   shakeOnClear:
     amount: 1.5
     duration: .5
+--- !u!114 &268271249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 268271242}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0efa93854621c4305830c3f0603c80bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  board: {fileID: 1326592649}
+  boardPercentage: .699999988
+  smoothTime: .300000012
 --- !u!1 &319855787
 GameObject:
   m_ObjectHideFlags: 0

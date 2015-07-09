@@ -77,10 +77,10 @@ public class Block : MonoBehaviour {
 	
 	public bool Falling {
 		get {
-			if (transform.parent.tag == "Board")
-				return false;
+			if (transform.parent.tag == "Piece")
+				return true;
 				
-			return true;
+			return false;
 		}
 	}
 	

@@ -234,12 +234,14 @@ public class FallingPiece : MonoBehaviour {
 			ShowOutline(true);
 			GetComponent<InputManager>().enabled = true;
 		}
+		
 		else if (state == PieceState.WaitingForEffect) {
 			if (fall_type == FallType.Instant) {
 				audio_manager.PlaySound(PlayerSounds.Fall);
 				tweener.Fastfall = true;
 			}
 		}
+		
 		else if (state == PieceState.Landed) {
 			landed();
 		}
@@ -296,6 +298,29 @@ public class FallingPiece : MonoBehaviour {
 	}
 	
 	public GameObject[] Blocks { get { return blocks; } }
+	public bool Falling { get { return state == PieceState.Falling || state == PieceState.WaitingForEffect; } }
+	
+	public static Vector3 Centroid {
+		get {
+			Vector3 centroid = Vector3.zero;
+			int piece_count = 0;
+		
+			GameObject[] pieces = GameObject.FindGameObjectsWithTag("Piece");
+			foreach (GameObject piece_obj in pieces) {
+				FallingPiece piece = piece_obj.GetComponent<FallingPiece>();
+				if (!piece.Falling) continue;
+				
+				piece_count++;
+				centroid += piece.transform.position;
+			}
+			
+			if (piece_count > 0)
+				return centroid / piece_count;
+			else
+				throw new CameraTrackerException();
+
+		}
+	}
 	
 /*	void OnDrawGizmos() {
 		Gizmos.color = Color.green;

@@ -95,7 +95,6 @@ public class PieceTweener : MonoBehaviour {
 	}
 	
 	public void Stop() {
-		Debug.Log ("Stop");
 		resetTween ();
 		transform.localPosition = Vector3.zero;
 		velocity = Vector3.zero;
@@ -112,7 +111,6 @@ public class PieceTweener : MonoBehaviour {
 		if (fast_fall) {
 			float scale_factor = 1 + Mathf.Abs (rotated_velocity.y) * fallStretchFactor;
 			scale = transform.parent.rotation * new Vector3(1 / scale_factor, scale_factor, 1 / scale_factor);
-			if (scale_factor == 1) Debug.Log (transform.rotation.eulerAngles.z + " " + velocity.y + " " + scale);
 		}
 		else {
 			float scale_factor = 1 + Mathf.Abs (unrotated_position.x) * movementStretchFactor;
