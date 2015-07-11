@@ -73,24 +73,19 @@ public class FallingPiece : MonoBehaviour {
 	}
 	
 	void Update () {
-	
-		if (state == PieceState.Falling) {
+		if (state == PieceState.Falling) {	
+			fixOverlap();
+				
 			handleKeyInput();
 			Vector3 movement = getMovement();
 			
 			if (movement.x != 0) {
-	
-				foreach (GameObject block in blocks) {
-					if (board.Collide(block.GetComponent <Block>().GamePosition + movement, PlayerNumber) == BlockCollision.Solid) {
-						movement = Vector2.zero;
-					}
-				}
+				movement = testMovement(movement);
 				
 				if (movement.magnitude > 0) {
 					// Don't use transform.translate here as it will totally mess with the rotation.
 					transform.position = transform.position + movement;
 					moveEffect (movement);
-					//StartCoroutine ("LerpMovement", movement);
 				}
 			}
 		}
@@ -100,6 +95,30 @@ public class FallingPiece : MonoBehaviour {
 				setState (PieceState.Landed);
 			}
 		}
+	}
+	
+	void fixOverlap() {
+		bool overlap = true;
+	
+		while (overlap) {
+			overlap = false;
+			foreach (GameObject block in blocks) {				
+				if (board.Collide(block.GetComponent <Block>().GamePosition, PlayerNumber) == BlockCollision.Solid) {
+					transform.position = transform.position + new Vector3(0, 1, 0);
+					overlap = true;
+				}
+			}
+		}
+	}
+	
+	Vector3 testMovement(Vector3 movement) {
+		foreach (GameObject block in blocks) {				
+			if (board.Collide(block.GetComponent <Block>().GamePosition + movement, PlayerNumber) == BlockCollision.Solid) {
+				movement = Vector2.zero;
+			}
+		}
+		
+		return movement;
 	}
 	
 	private float getFallTime() {
@@ -125,6 +144,7 @@ public class FallingPiece : MonoBehaviour {
 			}
 			
 			// STEP 2: See if you landed.
+			fixOverlap();
 			foreach (GameObject block in blocks) {
 				if (board.Collide (block.GetComponent<Block>().GamePosition + Vector3.down * size, PlayerNumber) == BlockCollision.Solid) {	
 					stopFalling ();
@@ -228,6 +248,7 @@ public class FallingPiece : MonoBehaviour {
 		}
 	
 		if (state == PieceState.Falling) {
+			tweener.StartFallEffect();	
 			generateGhost();
 			fall_type = FallType.Normal;
 			StartCoroutine("fall");

@@ -20,6 +20,10 @@ public class PieceTweener : MonoBehaviour {
 		transform.scaleFrom (appearEffectTime, Vector3.one * .01f).easeType = GoEaseType.BackOut;
 	}
 
+	public void StartFallEffect() {
+		transform.scaleFrom (appearEffectTime, Vector3.one * .01f).easeType = GoEaseType.BackOut;
+	}
+
 	void Update () {
 		handleMovement();
 		handleRotation();

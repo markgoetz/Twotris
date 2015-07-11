@@ -195,6 +195,7 @@ public class Board : MonoBehaviour {
 		foreach (GameObject block in blocks) {
 			int x = Mathf.RoundToInt(block.transform.position.x);
 			block.transform.parent = columns[x].transform;
+			block.transform.localScale = Vector3.one;
 			columns[x].SendMessage("Tween");	
 		}
 		
