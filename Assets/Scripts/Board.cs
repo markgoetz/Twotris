@@ -19,8 +19,9 @@ public class Board : MonoBehaviour {
 	public float timeBetweenClears = .3f;
 	
 	[Header("Object References")]
-	public DifficultyManager dm;
+	public DifficultyManager difficultyManager;
 	public UIManager ui;
+	public GameObject column;
 	
 	private int[,] block_grid;
 	private bool game_over;
@@ -58,8 +59,7 @@ public class Board : MonoBehaviour {
 		
 		columns = new GameObject[width];
 		for (int i = 0; i < width; i++) {
-			columns[i] = new GameObject();
-			columns[i].transform.position = new Vector3(i, 0, 0);
+			columns[i] = Instantiate (column, new Vector3(i, 0, 0), Quaternion.identity) as GameObject;
 			columns[i].transform.parent = transform;
 		}
 		
@@ -160,7 +160,7 @@ public class Board : MonoBehaviour {
 			line_count++;
 			clearLine (y, line_count);
 			
-			dm.AddLine();
+			difficultyManager.AddLine();
 			scoreKeeper.AddScore(pointsPerLine[line_count] - pointsPerLine[line_count - 1]);
 			yield return new WaitForSeconds(timeBetweenClears);
 		}
@@ -192,19 +192,10 @@ public class Board : MonoBehaviour {
 	}
 	
 	public void AddBlocks(GameObject[] blocks) {
-		GoTweenConfig squash_config  = new GoTweenConfig().scale(new Vector3(1.3f, .7f, 1.3f));
-		GoTweenConfig restore_config = new GoTweenConfig().scale(new Vector3(1f, 1f, 1f));
-	
 		foreach (GameObject block in blocks) {
 			int x = Mathf.RoundToInt(block.transform.position.x);
 			block.transform.parent = columns[x].transform;
-			
-			GoTween squash_tween  = new GoTween( columns[x].transform, .25f, squash_config);
-			GoTween restore_tween = new GoTween( columns[x].transform, .25f, restore_config);
-			
-			var flow = new GoTweenFlow();
-			flow.insert( 0, squash_tween ).insert( .25f, restore_tween );
-			flow.play();
+			columns[x].SendMessage("Tween");	
 		}
 		
 		audio_manager.PlaySound(BoardSounds.land);
