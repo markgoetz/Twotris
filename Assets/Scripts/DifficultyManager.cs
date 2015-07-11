@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(AudioSource))]
 public class DifficultyManager : MonoBehaviour {
 	public UIManager ui;
 	public DifficultyLevel[] levels = {
@@ -14,6 +15,7 @@ public class DifficultyManager : MonoBehaviour {
 		new DifficultyLevel(.6f, .6f),
         new DifficultyLevel(.4f, .4f)
 	};
+	public AudioClip levelUpSound;
 	private int lines;
 	
 	public void AddLine() {
@@ -27,7 +29,12 @@ public class DifficultyManager : MonoBehaviour {
 		ui.SetLines(lines);
 		
 		if (new_level != old_level)
-			ui.SetLevel(LevelNumber);
+			LevelUp();
+	}
+	
+	private void LevelUp() {
+		ui.SetLevel(LevelNumber);
+		GetComponent<AudioSource>().PlayOneShot(levelUpSound);
 	}
 
 	public int Lines {

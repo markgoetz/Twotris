@@ -875,8 +875,9 @@ MonoBehaviour:
   scoreKeeper: {fileID: 1335448253}
   pointsPerLine: 00000000640000002c01000058020000e8030000
   timeBetweenClears: .300000012
-  dm: {fileID: 1374899920}
+  difficultyManager: {fileID: 1374899920}
   ui: {fileID: 319855789}
+  column: {fileID: 104654, guid: b57800045d1da41d4845f407ef8c5527, type: 2}
 --- !u!4 &1326592650
 Transform:
   m_ObjectHideFlags: 0
@@ -905,7 +906,6 @@ MonoBehaviour:
   lineClear2: {fileID: 8300000, guid: f866c94faea24434dbf86a7536107b33, type: 3}
   lineClear3: {fileID: 8300000, guid: 7542100f4c5834d6cb10596a2059dde4, type: 3}
   lineClear4: {fileID: 8300000, guid: 51125507d93c14885ba73fecbd36ab94, type: 3}
-  levelUp: {fileID: 0}
   die: {fileID: 0}
 --- !u!82 &1326592652
 AudioSource:
@@ -1194,6 +1194,10 @@ Prefab:
       propertyPath: ui
       value: 
       objectReference: {fileID: 319855789}
+    - target: {fileID: 11453352, guid: 00ea5b94809a54510be7ac3db90bab43, type: 2}
+      propertyPath: levelUpSound
+      value: 
+      objectReference: {fileID: 8300000, guid: c4d8f6217a56c45a38937ead8dc5baab, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 00ea5b94809a54510be7ac3db90bab43, type: 2}
   m_IsPrefabParent: 0
@@ -1330,6 +1334,79 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1943947646}
   m_RootOrder: 0
+--- !u!1 &2071808144 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 145358, guid: 00ea5b94809a54510be7ac3db90bab43, type: 2}
+  m_PrefabInternal: {fileID: 1746080451}
+--- !u!82 &2071808145
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2071808144}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &2142226952
 GameObject:
   m_ObjectHideFlags: 0
@@ -1412,6 +1489,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenStartTime: .0299999993
-  tweenEndTime: .200000003
-  tweenTextSize: 45
+  tweenEndTime: .150000006
+  tweenTextSize: 48
   tweenTextColor: {r: .551470578, g: .800653517, b: 1, a: 1}

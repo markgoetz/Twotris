@@ -144,6 +144,7 @@ MonoBehaviour:
   fallingBlock: {fileID: 189244, guid: 0480bc6c5618a4b0a9b83e2d5091bec2, type: 2}
   ghostPiece: {fileID: 194044, guid: 80e4db89afa594bc585c974ed6f262e7, type: 2}
   playerColorList: {fileID: 11400000, guid: d3fa13a2c17824975999c3bf26ada1b1, type: 2}
+  dustCloud: {fileID: 124082, guid: 4de542b07482e4c249f76f0af7dcbed7, type: 2}
   points: 10
 --- !u!114 &11405600
 MonoBehaviour:
@@ -251,6 +252,10 @@ Prefab:
       propertyPath: appearEffectTime
       value: .200000003
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: dustCloud
+      value: 
+      objectReference: {fileID: 124082, guid: 4de542b07482e4c249f76f0af7dcbed7, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 194044}

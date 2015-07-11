@@ -8,7 +8,8 @@ public class ColumnTweener : MonoBehaviour {
 	
 	public void Tween() {
 		float height = Height;
-		float scale_factor = (height - tweenAmount) / height;
+		float scale_factor = (height > 0) ? (height - tweenAmount) / height : .7f;
+
 	
 		GoTweenConfig squash_config  = new GoTweenConfig().scale(new Vector3(1 / scale_factor, scale_factor, 1 / scale_factor));
 		GoTweenConfig restore_config = new GoTweenConfig().scale(Vector3.one);
@@ -31,6 +32,4 @@ public class ColumnTweener : MonoBehaviour {
 			return height;
 		}
 	}
-	
-	
 }

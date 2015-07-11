@@ -8,7 +8,6 @@ public class BoardSoundManager : MonoBehaviour {
 	public AudioClip lineClear2;
 	public AudioClip lineClear3;
 	public AudioClip lineClear4;
-	public AudioClip levelUp;
 	public AudioClip die;
 
 	private AudioSource source;
@@ -34,9 +33,6 @@ public class BoardSoundManager : MonoBehaviour {
 		if (sound_type == BoardSounds.lineClear4) {
 			clip = lineClear4;
 		}
-		if (sound_type == BoardSounds.levelUp) {
-			clip = levelUp;
-		}
 		if (sound_type == BoardSounds.die) {
 			clip = die;
 		}
@@ -54,6 +50,5 @@ public enum BoardSounds {
 	lineClear2,
 	lineClear3,
 	lineClear4,
-	levelUp,
 	die
 }

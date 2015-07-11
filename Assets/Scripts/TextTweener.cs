@@ -20,6 +20,7 @@ public class TextTweener : MonoBehaviour {
 	}
 	
 	public void Tween() {
+		///start_text_color = text.color;
 		StartCoroutine("TweenCoroutine");
 	}
 	
@@ -36,6 +37,7 @@ public class TextTweener : MonoBehaviour {
 			yield return null;
 			elapsed += Time.deltaTime;
 		}
+		text.color = start_text_color;
 	}
 	
 	private void SetTween(float factor) {

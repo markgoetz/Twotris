@@ -8,6 +8,7 @@ public class FallingPiece : MonoBehaviour {
 	public GameObject fallingBlock;
 	public GameObject ghostPiece;
 	public PlayerColorList playerColorList;
+	public GameObject dustCloud;
 	public int points;
 	
 	private int size = 1;
@@ -295,6 +296,15 @@ public class FallingPiece : MonoBehaviour {
 		
 		// Screenshake
 		Camera.main.SendMessage("Shake", CameraShakeType.Land);
+		
+		spawnDustClouds();
+	}
+	
+	private void spawnDustClouds() {
+		foreach (GameObject block in blocks) {
+			if (board.Collide (block.transform.position + Vector3.down, PlayerNumber) != BlockCollision.NoCollision)
+				Instantiate (dustCloud, block.transform.position + new Vector3(0,0,-1), Quaternion.identity);
+		}
 	}
 	
 	public GameObject[] Blocks { get { return blocks; } }
