@@ -14,14 +14,19 @@ public class PieceTweener : MonoBehaviour {
 	private float rotation_velocity = 0;
 	private bool fast_fall;
 	
-	private AbstractGoTween _tween;
+	private GoTween _tween;
 	
 	public void AppearEffect() {
-		transform.scaleFrom (appearEffectTime, Vector3.one * .01f).easeType = GoEaseType.BackOut;
+		_tween = transform.scaleFrom(appearEffectTime, Vector3.one * .01f, false);
+		_tween.easeType = GoEaseType.BackOut;
+		_tween.autoRemoveOnComplete = true;
+		
 	}
 
 	public void StartFallEffect() {
-		transform.scaleFrom (appearEffectTime, Vector3.one * .01f).easeType = GoEaseType.BackOut;
+		_tween = transform.scaleFrom(appearEffectTime, Vector3.one * .01f, false);
+		_tween.easeType = GoEaseType.BackOut;
+		_tween.autoRemoveOnComplete = true;
 	}
 
 	void Update () {
@@ -79,7 +84,17 @@ public class PieceTweener : MonoBehaviour {
 	
 	public void Rotate(float z_angle) {
 		// Wobble
-		resetTween ();
+		/*GoTweenConfig wobble_config  = new GoTweenConfig().scale(Vector3.one * 1.2f);
+		GoTweenConfig restore_config = new GoTweenConfig().scale(Vector3.one);
+		
+		GoTween squash_tween  = new GoTween( transform, .1f, wobble_config);
+		GoTween restore_tween = new GoTween( transform, .1f, restore_config);
+		
+		var flow = new GoTweenFlow();
+		flow.insert( 0, squash_tween ).insert( .1f, restore_tween );
+		flow.play();*/
+		
+		resetTween();
 		_tween = Go.to (
 			transform,
 			.1f,
@@ -88,6 +103,7 @@ public class PieceTweener : MonoBehaviour {
 				.setEaseType (GoEaseType.ElasticOut)
 				.setIterations(2, GoLoopType.PingPong)
 		);
+		_tween.autoRemoveOnComplete = true;
 		
 		transform.localRotation = Quaternion.Euler(0,0,transform.localRotation.eulerAngles.z - z_angle);
 	}
@@ -105,9 +121,22 @@ public class PieceTweener : MonoBehaviour {
 		transform.localScale = Vector3.one;
 	}
 	
+	// Internal function to avoid race conditions when squashing and stretching.
+	// If a tween is active, it should override StretchMovement.
+	bool ShouldStretch() {
+		if (_tween.state == GoTweenState.Running) return false;
+	
+		return true;
+	}
+	
 	
 	// Handles squash and stretch.
-	void StretchMovement() {		
+	void StretchMovement() {
+		// Yield to any current tweens.
+		if (!ShouldStretch()) {
+			return;
+		}
+	
 		Vector3 unrotated_position = transform.parent.rotation * transform.localPosition;
 		Vector3 rotated_velocity = transform.parent.rotation * velocity;
 		Vector3 scale;

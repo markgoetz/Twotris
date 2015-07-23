@@ -7,7 +7,7 @@ public class ColumnTweener : MonoBehaviour {
 	public float tweenAmount;
 	
 	public void Tween() {
-		float height = Height;
+		int height = Height;
 		float scale_factor = (height > 0) ? (height - tweenAmount) / height : .7f;
 
 	
@@ -22,14 +22,14 @@ public class ColumnTweener : MonoBehaviour {
 		flow.play();
 	}
 	
-	public float Height {
+	public int Height {
 		get {
 			float height = 0;
 			foreach (Transform child in transform) {
 				if (child.position.y > height)
 					height = child.position.y;
 			}
-			return height;
+			return Mathf.FloorToInt(height);
 		}
 	}
 }

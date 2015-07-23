@@ -144,7 +144,10 @@ MonoBehaviour:
   fallingBlock: {fileID: 189244, guid: 0480bc6c5618a4b0a9b83e2d5091bec2, type: 2}
   ghostPiece: {fileID: 194044, guid: 80e4db89afa594bc585c974ed6f262e7, type: 2}
   playerColorList: {fileID: 11400000, guid: d3fa13a2c17824975999c3bf26ada1b1, type: 2}
-  dustCloud: {fileID: 124082, guid: 4de542b07482e4c249f76f0af7dcbed7, type: 2}
+  dustCloud: {fileID: 117726, guid: bcacb04207c9545a28de5fcc7b014dd0, type: 2}
+  landSleepSettings:
+    timeScale: .400000006
+    duration: .0500000007
   points: 10
 --- !u!114 &11405600
 MonoBehaviour:
@@ -184,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d8b7ac74fe548d491b3e6000652395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementStretchFactor: 0
+  movementStretchFactor: .25
   fallStretchFactor: .00999999978
   acceleration: 200
   rotationAcceleration: 4000
@@ -255,7 +258,39 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: dustCloud
       value: 
-      objectReference: {fileID: 124082, guid: 4de542b07482e4c249f76f0af7dcbed7, type: 2}
+      objectReference: {fileID: 117726, guid: bcacb04207c9545a28de5fcc7b014dd0, type: 2}
+    - target: {fileID: 0}
+      propertyPath: movementStretchFactor
+      value: .25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: landSleepSettings.timeScale
+      value: .400000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: landSleepSettings.duration
+      value: .0500000007
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Autodestruct
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_EndWidth
+      value: .00999999978
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Time
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 194044}

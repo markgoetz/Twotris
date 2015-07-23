@@ -15,12 +15,14 @@ public class Board : MonoBehaviour {
 	
 	[Header("Line Clearing")]
 	public ScoreKeeper scoreKeeper;
+	public SleepSettings clearSleep;
 	public int[] pointsPerLine;
 	public float timeBetweenClears = .3f;
 	
 	[Header("Object References")]
 	public DifficultyManager difficultyManager;
 	public UIManager ui;
+	public SleepManager sleepManager;
 	public GameObject column;
 	
 	private int[,] block_grid;
@@ -238,9 +240,13 @@ public class Board : MonoBehaviour {
 				
 		// Camera shake
 		Camera.main.SendMessage ("Shake", CameraShakeType.Clear);
+		
+		sleepManager.SendMessage ("Sleep", clearSleep);
 	}
 	
 	public void DieEffect() {
+		audio_manager.PlaySound(BoardSounds.die);
+		
 		foreach (GameObject floor in floors) {
 			floor.SendMessage ("Fall");
 		}

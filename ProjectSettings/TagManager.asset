@@ -12,6 +12,8 @@ TagManager:
   - DifficultyManager
   - Piece
   - BlockRoot
+  - BlockSpawner
+  - SleepManager
   layers:
   - Default
   - TransparentFX

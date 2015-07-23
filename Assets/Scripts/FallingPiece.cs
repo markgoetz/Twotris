@@ -3,19 +3,22 @@ using System.Collections;
 
 [RequireComponent(typeof(InputManager))]
 public class FallingPiece : MonoBehaviour {
-	//public float movementTime;
 	public float fastFallTime = .0000005f;
 	public GameObject fallingBlock;
 	public GameObject ghostPiece;
 	public PlayerColorList playerColorList;
 	public GameObject dustCloud;
+	public SleepSettings landSleepSettings;
 	public int points;
 	
 	private int size = 1;
 	private bool can_move = true;
-	private Board board;
 	private bool falling = true;
+	
+	private Board board;
 	private DifficultyManager dm;	
+	private SleepManager sleepManager;
+	
 	private GameObject ghost;
 	private PieceTweener tweener;
 	private PieceSpawner piece_spawner;
@@ -33,6 +36,8 @@ public class FallingPiece : MonoBehaviour {
 		audio_manager = GetComponent<PieceSoundManager>();	
 		board = GameObject.FindGameObjectWithTag("Board").GetComponent<Board>();
 		dm = GameObject.FindGameObjectWithTag("DifficultyManager").GetComponent<DifficultyManager>();
+		sleepManager = GameObject.FindGameObjectWithTag("SleepManager").GetComponent<SleepManager>();
+		
 		tweener = GetComponentInChildren<PieceTweener>();
 	}
 	
@@ -305,6 +310,8 @@ public class FallingPiece : MonoBehaviour {
 	
 	private void landEffect() {
 		tweener.Stop ();
+		
+		sleepManager.SendMessage("Sleep", landSleepSettings);
 	
 		// Flash
 		foreach (GameObject block in Blocks) {

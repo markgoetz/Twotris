@@ -94,7 +94,9 @@ public class Block : MonoBehaviour {
 		// The piece transform gets really buggy and rotates unintuitively if you call MoveDown on a falling block.
 		if (Falling) return; 
 	
-		transform.position = transform.position + new Vector3(0,-1,0);
+		// multiply to account for squash
+		// Must change if the object hierarchy changes...
+		transform.position = transform.position + new Vector3(0,-1,0) * transform.parent.localScale.y;
 	}
 	
 	/*void OnDrawGizmos() {
