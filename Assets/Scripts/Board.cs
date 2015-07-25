@@ -198,6 +198,7 @@ public class Board : MonoBehaviour {
 			int x = Mathf.RoundToInt(block.transform.position.x);
 			block.transform.parent = columns[x].transform;
 			block.transform.localScale = Vector3.one;
+			block.SendMessage ("Flatten");
 			columns[x].SendMessage("Tween");	
 		}
 		

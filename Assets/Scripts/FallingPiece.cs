@@ -266,6 +266,9 @@ public class FallingPiece : MonoBehaviour {
 			if (fall_type == FallType.Instant) {
 				audio_manager.PlaySound(PlayerSounds.Fall);
 				tweener.Fastfall = true;
+				foreach (GameObject block in blocks) {
+					block.SendMessage ("FastfallEffect");
+				}
 			}
 		}
 		
@@ -296,6 +299,11 @@ public class FallingPiece : MonoBehaviour {
 	private void moveEffect(Vector3 movement) {
 		// Sound effect
 		audio_manager.PlaySound(PlayerSounds.Move);
+	
+		foreach (GameObject block in blocks) {
+			block.SendMessage ("MoveEffect");
+		}
+		
 		// Tween, squash and stretch
 		tweener.Move (movement);
 	}
@@ -303,6 +311,10 @@ public class FallingPiece : MonoBehaviour {
 	private void rotateEffect(float z_angle) {
 		// Sound effect
 		audio_manager.PlaySound(PlayerSounds.Rotate);
+		
+		foreach (GameObject block in blocks) {
+			block.SendMessage ("RotateEffect");
+		}
 		
 		// Tween, wobble
 		tweener.Rotate(z_angle);

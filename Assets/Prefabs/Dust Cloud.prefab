@@ -58,7 +58,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: .400000006
+      scalar: .5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -73,7 +73,7 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - time: 0
-          value: .5
+          value: .400000006
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -208,7 +208,7 @@ ParticleSystem:
         rgba: 4294967295
       minMaxState: 0
     startSize:
-      scalar: 1
+      scalar: 1.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -223,7 +223,7 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - time: 0
-          value: .5
+          value: .333333343
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -401,10 +401,10 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4294967295
+          rgba: 4278232319
         key1:
           serializedVersion: 2
-          rgba: 16777215
+          rgba: 3221225471
         key2:
           serializedVersion: 2
           rgba: 0
@@ -432,22 +432,22 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 32768
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
         atime6: 0
         atime7: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
           rgba: 4290767103
         key1:
           serializedVersion: 2
-          rgba: 12577023
+          rgba: 3217025279
         key2:
           serializedVersion: 2
           rgba: 0
@@ -475,15 +475,15 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
-        atime3: 0
+        atime1: 32768
+        atime2: 65535
+        atime3: 65535
         atime4: 0
         atime5: 0
         atime6: 0
         atime7: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minColor:
         serializedVersion: 2
         rgba: 4294967295
@@ -1125,7 +1125,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: ColorModule.gradient.maxGradient.key1.rgba
-      value: 16777215
+      value: 3221225471
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: ColorModule.gradient.minGradient.key0.rgba
@@ -1133,11 +1133,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: ColorModule.gradient.minGradient.key1.rgba
-      value: 12577023
+      value: 3217025279
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: InitialModule.startLifetime.scalar
-      value: .400000006
+      value: .5
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: InitialModule.startLifetime.maxCurve.m_Curve.Array.data[0].value
@@ -1145,7 +1145,51 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: InitialModule.startLifetime.minCurve.m_Curve.Array.data[0].value
-      value: .5
+      value: .400000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ColorModule.gradient.maxGradient.key0.rgba
+      value: 4278232319
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ColorModule.gradient.minGradient.atime1
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ColorModule.gradient.minGradient.atime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ColorModule.gradient.minGradient.m_NumAlphaKeys
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ColorModule.gradient.minGradient.key2.rgba
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ColorModule.gradient.minGradient.atime3
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ColorModule.gradient.maxGradient.atime1
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ColorModule.gradient.maxGradient.atime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ColorModule.gradient.maxGradient.m_NumAlphaKeys
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.minCurve.m_Curve.Array.data[0].value
+      value: .333333343
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -5,6 +5,8 @@ using System.Collections;
 public class Block : MonoBehaviour {
 	private bool active = true;
 	public GameObject explosion;
+	public ParticleSystem moveTrail;
+	public ParticleSystem fastfallTrail;
 	public float FlashLength;
 
 	private AbstractGoTween _tween;
@@ -42,6 +44,8 @@ public class Block : MonoBehaviour {
 		}
 		set {
 			GetComponent<MeshRenderer>().material.color = value;
+			fastfallTrail.startColor = value;
+			moveTrail.startColor = new Color(value.r, value.g, value.b, moveTrail.startColor.a);
 		}
 	}
 	
@@ -97,6 +101,22 @@ public class Block : MonoBehaviour {
 		// multiply to account for squash
 		// Must change if the object hierarchy changes...
 		transform.position = transform.position + new Vector3(0,-1,0) * transform.parent.localScale.y;
+	}
+	
+	public void MoveEffect() {
+		moveTrail.Play ();
+	}
+	
+	public void RotateEffect() {
+		moveTrail.Play ();
+	}
+	
+	public void FastfallEffect() {
+		fastfallTrail.Play ();
+	}
+	
+	public void Flatten() {
+		fastfallTrail.Stop ();
 	}
 	
 	/*void OnDrawGizmos() {
